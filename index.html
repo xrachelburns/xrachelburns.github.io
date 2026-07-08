@@ -1,201 +1,115 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Rachel Burns is a software engineering student building thoughtful web, cloud, cybersecurity, and AI projects.">
-  <meta name="theme-color" content="#130d1f">
-  <title>Rachel Burns | Software Engineering Portfolio</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Rachel Burns is a software engineering student creating thoughtful web, cloud, cybersecurity, and AI experiences.">
+  <meta name="theme-color" content="#17131f">
+  <title>Rachel Burns — Software Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Skip to content</a>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="ambient" aria-hidden="true"></div>
 
-  <header class="site-header">
-    <a class="brand" href="#home" aria-label="Rachel Burns, home">
-      <span class="brand-mark" aria-hidden="true">RB</span>
-      <span>Rachel Burns</span>
-    </a>
+  <header class="menu-bar">
+    <a class="wordmark" href="#home" aria-label="Rachel Burns home"><span>RB</span> Rachel Burns</a>
     <nav aria-label="Primary navigation">
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#skills">Skills</a>
-      <a href="#contact">Contact</a>
+      <a href="#about">About</a><a href="#work">Work</a><a href="#skills">Skills</a><a href="#contact">Contact</a>
     </nav>
+    <button class="theme-toggle" type="button" aria-label="Toggle color theme"><span aria-hidden="true">◐</span><span class="theme-label">Light</span></button>
   </header>
 
-  <main id="main-content">
-    <section class="hero" id="home" aria-labelledby="hero-title">
-      <div class="hero-copy">
-        <p class="eyebrow"><span class="status-dot"></span> Open to learning, building, and collaboration</p>
-        <h1 id="hero-title">I build at the intersection of <span>software and possibility.</span></h1>
-        <p class="hero-role">Software Engineering Student <span aria-hidden="true">/</span> Future AI Engineer</p>
-        <p class="hero-intro">Building software that combines modern web development, cloud technologies, cybersecurity, and artificial intelligence.</p>
-        <div class="hero-actions">
-          <a class="button button-primary" href="#projects">View projects <span aria-hidden="true">↘</span></a>
-          <a class="button button-secondary" href="https://www.linkedin.com/in/xrachelburns" target="_blank" rel="noreferrer">LinkedIn <span class="sr-only">(opens in a new tab)</span></a>
-          <a class="button button-secondary" href="https://github.com/xrachelburns" target="_blank" rel="noreferrer">GitHub <span class="sr-only">(opens in a new tab)</span></a>
-          <a class="button button-secondary" href="assets/Rachel-Burns-Resume.pdf" target="_blank">Résumé</a>
-        </div>
-        <p class="hero-note">Scroll to explore, or drive the rover with WASD / arrow keys.</p>
-      </div>
-
-      <div class="world-shell" aria-label="Interactive portfolio map">
-        <div class="world-toolbar">
-          <span><i></i> Rachel's learning map</span>
-          <button class="world-reset" type="button">Reset rover</button>
-        </div>
-        <div class="world" tabindex="0" aria-describedby="world-help">
-          <div class="grid-lines" aria-hidden="true"></div>
-          <div class="road road-horizontal" aria-hidden="true"></div>
-          <div class="road road-vertical" aria-hidden="true"></div>
-          <a class="station station-about" href="#about"><b>01</b><span>About</span></a>
-          <a class="station station-projects" href="#projects"><b>02</b><span>Projects</span></a>
-          <a class="station station-skills" href="#skills"><b>03</b><span>Skills</span></a>
-          <a class="station station-contact" href="#contact"><b>04</b><span>Contact</span></a>
-          <div class="rover" aria-hidden="true"><span></span><i></i><i></i></div>
-          <div class="world-glow" aria-hidden="true"></div>
-        </div>
-        <p id="world-help" class="world-help">Select the map and use WASD or arrow keys. The map is decorative; every destination is also available in the main navigation.</p>
-      </div>
-    </section>
-
-    <section class="marquee" aria-label="Areas of interest">
-      <div>
-        <span>WEB DEVELOPMENT</span><i>◆</i><span>ARTIFICIAL INTELLIGENCE</span><i>◆</i><span>CLOUD</span><i>◆</i><span>CYBERSECURITY</span><i>◆</i><span>CONTINUOUS LEARNING</span>
-      </div>
-    </section>
-
-    <section class="section about" id="about" aria-labelledby="about-title">
-      <div class="section-label"><span>01</span> About me</div>
-      <div class="about-layout">
-        <div>
-          <p class="kicker">Curious by default. Practical by design.</p>
-          <h2 id="about-title">Learning deeply, then turning that knowledge into useful software.</h2>
-        </div>
-        <div class="about-copy">
-          <p>Hi, I'm Rachel Burns, a software engineering student with a passion for artificial intelligence, cloud computing, cybersecurity, and modern web technologies.</p>
-          <p>I'm pursuing an accelerated B.S. Software Engineering / M.S. AI Engineering pathway at Western Governors University. My background in fast-paced customer service taught me to communicate clearly, stay calm under pressure, and solve problems with care—strengths I now bring to every technical project.</p>
-          <dl class="quick-facts">
-            <div><dt>Current focus</dt><dd>Software engineering</dd></div>
-            <div><dt>Next horizon</dt><dd>AI engineering</dd></div>
-            <div><dt>Approach</dt><dd>Build, test, improve</dd></div>
-          </dl>
-        </div>
-      </div>
-    </section>
-
-    <section class="section education" aria-labelledby="education-title">
-      <div class="section-label"><span>02</span> Education</div>
-      <h2 id="education-title">The learning path</h2>
-      <div class="timeline">
-        <article class="timeline-card active-card">
-          <p class="timeline-status">In progress</p>
-          <p class="timeline-school">Western Governors University · Jan 2026–present</p>
-          <h3>B.S. Software Engineering</h3>
-          <p>Accelerated pathway focused on designing, building, testing, and maintaining modern software systems.</p>
-        </article>
-        <article class="timeline-card">
-          <p class="timeline-status">Planned</p>
-          <p class="timeline-school">Western Governors University pathway</p>
-          <h3>M.S. AI Engineering</h3>
-          <p>Advanced study in intelligent systems, responsible AI, and production-focused machine learning.</p>
-        </article>
-      </div>
-      <div class="coursework" aria-label="Relevant coursework and training">
-        <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Networking</span><span>Relational Databases</span><span>AWS Cloud</span><span>Cybersecurity</span><span>Project Management</span><span>Scrum</span>
-      </div>
-    </section>
-
-    <section class="section projects" id="projects" aria-labelledby="projects-title">
-      <div class="section-heading">
-        <div class="section-label"><span>03</span> Selected projects</div>
-        <h2 id="projects-title">Proof lives in the work.</h2>
-        <p>Every project is a checkpoint: a new problem understood, a new skill made practical.</p>
-      </div>
-
-      <div class="project-grid">
-        <article class="project-card project-featured">
-          <div class="project-number">01 / Featured</div>
-          <div class="project-preview" aria-hidden="true">
-            <div class="browser-bar"><i></i><i></i><i></i><span>ABC Fitness Studio</span></div>
-            <div class="preview-page">
-              <div class="preview-nav"></div>
-              <div class="preview-hero"><span></span><span></span><span></span></div>
-              <div class="preview-cards"><i></i><i></i><i></i></div>
-            </div>
+  <main id="main">
+    <section class="hero" id="home">
+      <div class="hero-wallpaper" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-copy">
+          <p class="availability"><i></i> Open to internships & collaboration</p>
+          <h1>Engineering with<br><em>curiosity.</em></h1>
+          <p class="hero-lead">I’m Rachel—a software engineering student building thoughtful, human-centered experiences across the web, cloud, cybersecurity, and AI.</p>
+          <div class="actions">
+            <a class="button primary" href="#work">Explore my work <span>↓</span></a>
+            <a class="button glass" href="assets/Rachel-Burns-Resume.pdf" target="_blank">View résumé <span>↗</span></a>
           </div>
-          <div class="project-content">
-            <p class="project-type">Responsive multipage website</p>
-            <h3>ABC Fitness Studio</h3>
-            <p>A polished client website with accessible navigation, responsive layouts, a product gallery, membership information, and a contact experience.</p>
-            <ul class="tags" aria-label="Technologies used"><li>HTML</li><li>CSS</li><li>Responsive design</li><li>Accessibility</li></ul>
-            <div class="project-links">
-              <a href="https://xrachelburns.github.io/ABC-Fitness-Studio/" target="_blank" rel="noreferrer">View live project <span aria-hidden="true">↗</span></a>
-              <a href="https://github.com/xrachelburns/ABC-Fitness-Studio" target="_blank" rel="noreferrer">Source code <span aria-hidden="true">↗</span></a>
-            </div>
-          </div>
-        </article>
+        </div>
 
-        <article class="project-card project-coming">
-          <div class="project-number">02 / In progress</div>
-          <div class="coming-icon" aria-hidden="true">AI</div>
-          <h3>Next AI Project</h3>
-          <p>A future home for an applied AI project that turns coursework into a useful, explainable tool.</p>
-          <ul class="tags"><li>Python</li><li>AI</li><li>Coming soon</li></ul>
-        </article>
-
-        <article class="project-card project-coming">
-          <div class="project-number">03 / In progress</div>
-          <div class="coming-icon" aria-hidden="true">DB</div>
-          <h3>Database Project</h3>
-          <p>A future data project focused on thoughtful schemas, useful queries, and reliable information design.</p>
-          <ul class="tags"><li>SQL</li><li>Databases</li><li>Coming soon</li></ul>
-        </article>
+        <aside class="profile-window window" aria-label="Rachel Burns profile">
+          <div class="window-bar"><span class="lights"><i></i><i></i><i></i></span><span>Profile.jpg</span><span></span></div>
+          <figure>
+            <img src="assets/images/rachel-headshot.jpg" alt="Professional portrait of Rachel Burns wearing glasses and a black blazer">
+            <figcaption><b>Rachel Burns</b><span>Software Engineering · AI</span></figcaption>
+          </figure>
+        </aside>
       </div>
+      <a class="scroll-cue" href="#about"><span></span> Scroll to explore</a>
     </section>
 
-    <section class="section skills" id="skills" aria-labelledby="skills-title">
-      <div class="section-label"><span>04</span> Skills and tools</div>
-      <div class="skills-layout">
+    <section class="section intro" id="about">
+      <div class="section-index"><span>01</span> About</div>
+      <div class="intro-grid">
         <div>
-          <p class="kicker">A growing technical toolkit</p>
-          <h2 id="skills-title">Strong foundations. Expanding range.</h2>
+          <p class="overline">HELLO, WORLD.</p>
+          <h2>I turn complex ideas into experiences that feel <em>clear.</em></h2>
         </div>
-        <div class="skill-groups">
-          <article><h3>Languages</h3><p>HTML · CSS · JavaScript · Python · SQL</p></article>
-          <article><h3>Technologies</h3><p>Git · GitHub · VS Code · AWS · Linux · Microsoft Office · Google Workspace</p></article>
-          <article><h3>Concepts</h3><p>Responsive design · Networking · Cybersecurity · Relational databases · Object-oriented programming · Scrum</p></article>
-          <article><h3>Training</h3><p>Google/Coursera cybersecurity · Cisco Networking Academy · AWS cloud and information technology</p></article>
+        <div class="intro-copy">
+          <p>I'm pursuing an accelerated B.S. Software Engineering / M.S. AI Engineering pathway at Western Governors University. I care about software that is useful, accessible, and quietly delightful.</p>
+          <p>My customer-service background taught me to listen carefully, communicate clearly, and stay composed under pressure. Those are engineering skills too—and I bring them to every project.</p>
+          <dl class="facts"><div><dt>Based in</dt><dd>Wisconsin, USA</dd></div><div><dt>Studying</dt><dd>Software Engineering</dd></div><div><dt>Exploring</dt><dd>AI · Cloud · Security</dd></div></dl>
         </div>
       </div>
     </section>
 
-    <section class="section contact" id="contact" aria-labelledby="contact-title">
-      <div class="contact-orbit" aria-hidden="true"><span></span><i></i></div>
-      <p class="eyebrow">Next stop: something worth building</p>
-      <h2 id="contact-title">Let's make the next idea real.</h2>
-      <p>I'm building my experience one project at a time and would love to connect with people working in software, cloud, cybersecurity, and AI.</p>
-      <div class="contact-actions">
-        <a class="button button-primary" href="https://github.com/xrachelburns" target="_blank" rel="noreferrer">Visit GitHub</a>
-        <a class="button button-secondary" href="https://www.linkedin.com/in/xrachelburns" target="_blank" rel="noreferrer">Connect on LinkedIn</a>
-        <a class="button button-secondary" href="mailto:dossier@xrachelburns.com">Email me</a>
-        <a class="button button-secondary" href="assets/Rachel-Burns-Resume.pdf" target="_blank">Download résumé</a>
+    <section class="desktop-section" id="work">
+      <div class="section section-heading"><div class="section-index"><span>02</span> Selected work</div><p class="overline">BUILT WITH INTENTION</p><h2>A few things I’ve made.</h2></div>
+      <div class="project-window window">
+        <div class="window-bar"><span class="lights"><i></i><i></i><i></i></span><span>Projects — Finder</span><span class="view-icons">◫  ≡</span></div>
+        <div class="finder">
+          <aside><b>Favorites</b><a class="active" href="#work">✦ Projects</a><a href="#skills">⌘ Skills</a><a href="assets/Rachel-Burns-Resume.pdf" target="_blank">▤ Résumé</a><b>Connect</b><a href="https://github.com/xrachelburns" target="_blank" rel="noreferrer">◉ GitHub</a><a href="https://www.linkedin.com/in/xrachelburns" target="_blank" rel="noreferrer">in LinkedIn</a></aside>
+          <div class="project-grid">
+            <article class="project-card featured">
+              <div class="project-art fitness"><div class="mini-browser"><i></i><i></i><i></i><span></span></div><b>ABC</b><small>FITNESS STUDIO</small></div>
+              <div class="project-copy"><span class="project-number">01 · FEATURED</span><h3>ABC Fitness Studio</h3><p>A responsive multipage client site with an accessible product gallery, memberships, and contact experience.</p><ul><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Accessibility</li></ul><div class="project-links"><a href="https://xrachelburns.github.io/ABC-Fitness-Studio/" target="_blank" rel="noreferrer">Live site ↗</a><a href="https://github.com/xrachelburns/ABC-Fitness-Studio" target="_blank" rel="noreferrer">Source ↗</a></div></div>
+            </article>
+            <article class="project-card soon"><div class="folder-icon">AI</div><span class="project-number">02 · IN PROGRESS</span><h3>Applied AI Project</h3><p>An explainable, useful AI tool—currently taking shape.</p><ul><li>Python</li><li>AI</li></ul></article>
+            <article class="project-card soon"><div class="folder-icon coral">DB</div><span class="project-number">03 · IN PROGRESS</span><h3>Data Systems Project</h3><p>Thoughtful schemas, useful queries, reliable information.</p><ul><li>SQL</li><li>Databases</li></ul></article>
+          </div>
+        </div>
       </div>
-      <p class="placeholder-note">Boulder Junction, Wisconsin · Open to remote internships and opportunities</p>
+    </section>
+
+    <section class="journey section" aria-labelledby="journey-title">
+      <div class="section-index"><span>03</span> Interactive journey</div>
+      <div class="journey-grid">
+        <div><p class="overline">A SMALL DIGITAL WORLD</p><h2 id="journey-title">Meet your guide.</h2><p>Navigate Rachel's learning landscape with <kbd>WASD</kbd> or the arrow keys. The tiny anime-inspired guide adds a little personality while keeping the focus on the work.</p><div class="map-legend"><span><i class="pink"></i> Web</span><span><i class="blue"></i> Cloud</span><span><i class="violet"></i> AI</span></div></div>
+        <div class="map-window window">
+          <div class="window-bar"><span class="lights"><i></i><i></i><i></i></span><span>Learning Map</span><button class="map-reset" type="button">Reset</button></div>
+          <div class="world" tabindex="0" aria-label="Interactive learning map. Use WASD or arrow keys to move the guide.">
+            <div class="map-grid"></div><div class="path path-h"></div><div class="path path-v"></div>
+            <span class="map-node web">&lt;/&gt;<b>Web</b></span><span class="map-node cloud">☁<b>Cloud</b></span><span class="map-node ai">✦<b>AI</b></span><span class="map-node security">⌾<b>Security</b></span>
+            <div class="guide" aria-hidden="true"><i class="hair"></i><i class="face"><b></b><b></b></i><i class="body"></i><i class="spark">✦</i></div>
+            <p class="map-status">Guide online · Use arrow keys</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wallpaper-strip" aria-label="Creative inspiration gallery"><figure><img src="assets/images/lake-twilight.jpg" alt="Illustrated mountain lake at violet twilight"><figcaption>Wonder</figcaption></figure><figure><img src="assets/images/coastline-road.jpg" alt="Scenic road winding along a mountain coast"><figcaption>Direction</figcaption></figure><figure><img src="assets/images/color-waves.jpg" alt="Flowing colorful abstract waves"><figcaption>Flow</figcaption></figure></section>
+
+    <section class="section skills" id="skills">
+      <div class="section-index"><span>04</span> Toolkit</div>
+      <div class="skills-grid"><div><p class="overline">CURRENTLY LOADING...</p><h2>Strong foundations.<br><em>Expanding range.</em></h2></div><div class="skill-list"><article><span>01</span><div><h3>Languages</h3><p>HTML · CSS · JavaScript · Python · SQL</p></div></article><article><span>02</span><div><h3>Technologies</h3><p>Git · GitHub · AWS · Linux · VS Code</p></div></article><article><span>03</span><div><h3>Concepts</h3><p>Responsive design · Networking · Cybersecurity · Relational databases · OOP · Scrum</p></div></article><article><span>04</span><div><h3>Learning next</h3><p>Intelligent systems · Responsible AI · Production machine learning</p></div></article></div></div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="contact-glow"></div><p class="overline">ONE MORE THING...</p><h2>Let’s build something<br><em>worth remembering.</em></h2><p>I’m growing my experience one thoughtful project at a time. If you’re working in software, cloud, cybersecurity, or AI, I’d love to connect.</p><div class="actions"><a class="button primary" href="mailto:dossier@xrachelburns.com">Start a conversation <span>↗</span></a><a class="button glass" href="https://www.linkedin.com/in/xrachelburns" target="_blank" rel="noreferrer">LinkedIn</a><a class="button glass" href="https://github.com/xrachelburns" target="_blank" rel="noreferrer">GitHub</a></div>
     </section>
   </main>
 
-  <footer>
-    <a class="brand" href="#home"><span class="brand-mark" aria-hidden="true">RB</span><span>Rachel Burns</span></a>
-    <p>Designed and built with curiosity.</p>
-    <p>© <span id="year"></span> Rachel Burns</p>
-  </footer>
-
-  <div class="toast" role="status" aria-live="polite"></div>
+  <footer><a class="wordmark" href="#home"><span>RB</span> Rachel Burns</a><p>Designed with curiosity. Built with care.</p><p>© <span id="year"></span></p></footer>
 </body>
 </html>
