@@ -24,3 +24,8 @@ h1{font-family:Georgia,'Times New Roman',serif;font-weight:400;letter-spacing:-.
 .wallpaper-strip{gap:14px}.wallpaper-strip figure{box-shadow:0 18px 55px rgba(72,43,62,.12)}.wallpaper-strip figure:nth-child(1) img{content:url('assets/images/purple-shore.jpg')}.wallpaper-strip figure:nth-child(2) img{content:url('assets/images/pink-mountain.jpg')}.wallpaper-strip figure:nth-child(3) img{content:url('assets/images/monterey-pink.jpg')}
 .contact{background:linear-gradient(rgba(33,19,34,.3),rgba(31,18,33,.68)),url('assets/images/pink-mountain.jpg') center/cover}.contact .button.primary{background:#fff;color:#271d26}.contact .button.glass{color:#fff;border-color:rgba(255,255,255,.3);background:rgba(28,15,29,.22)}
 @media(max-width:850px){.hero-wallpaper{background:linear-gradient(rgba(249,242,243,.9),rgba(249,242,243,.72)),url('assets/images/monterey-pink.jpg') center/cover}.profile-window{max-width:360px}.intro-grid{grid-template-columns:1fr}}
+
+/* Untouched source portrait, cropped only by CSS */
+.profile-window{width:min(36vw,390px);aspect-ratio:1;border:8px solid rgba(255,255,255,.72);border-radius:50%;background:#eadde4;box-shadow:0 28px 80px rgba(86,45,70,.2);overflow:hidden;transform:none}
+.profile-window .window-bar,.profile-window figcaption{display:none}.profile-window figure{width:100%;height:100%}.profile-window img{width:100%;height:100%;aspect-ratio:1;object-fit:cover;object-position:58% 28%}
+@media(max-width:850px){.profile-window{width:min(76vw,350px)}}
