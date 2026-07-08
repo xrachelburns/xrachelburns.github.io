@@ -33,3 +33,27 @@ h1{font-family:Georgia,'Times New Roman',serif;font-weight:400;letter-spacing:-.
 /* User-selected close crop, displayed without image manipulation */
 .profile-window{width:min(34vw,350px);aspect-ratio:4/5;border-radius:28px}.profile-window img{aspect-ratio:4/5;object-position:center;object-fit:cover}
 @media(max-width:850px){.profile-window{width:min(76vw,340px)}}
+
+/* Final direction: simplified dark macOS landscape, with the original photo untouched */
+:root{--bg:#100d14;--bg2:#18131c;--panel:rgba(29,23,33,.86);--panel-solid:#211a25;--text:#fffafd;--muted:#bdb2ba;--line:rgba(255,255,255,.13);--pink:#f19abc;--blue:#91b8ff;--violet:#b6a0ff;color-scheme:dark}
+body{background:var(--bg);color:var(--text)}
+body.light{--bg:#f7f3f5;--bg2:#eee8ec;--panel:rgba(255,255,255,.84);--panel-solid:#fff;--text:#241d23;--muted:#70666e;--line:rgba(40,28,37,.14);color-scheme:light}
+.ambient{background:radial-gradient(circle at 15% 25%,rgba(241,154,188,.09),transparent 30%),radial-gradient(circle at 82% 58%,rgba(145,184,255,.08),transparent 34%)}
+.menu-bar{background:rgba(15,12,19,.78);border-color:rgba(255,255,255,.12);box-shadow:0 16px 50px rgba(0,0,0,.3)}
+body.light .menu-bar{background:rgba(255,255,255,.78)}
+.theme-toggle{background:rgba(255,255,255,.06)}
+.hero{min-height:100svh}
+.hero-wallpaper{background:linear-gradient(90deg,rgba(12,9,15,.94) 0%,rgba(12,9,15,.78) 47%,rgba(12,9,15,.34) 100%),url('assets/images/pink-valley.jpg') center/cover}
+.hero-wallpaper:after{background:linear-gradient(to bottom,rgba(10,8,13,.05) 58%,var(--bg)),radial-gradient(circle at 75% 48%,transparent 0,rgba(10,8,14,.14) 52%,rgba(10,8,14,.52) 100%)}
+.availability{background:rgba(12,9,16,.36);border-color:rgba(255,255,255,.17);color:#eee6ec}
+.hero-lead{color:#d6ced4}.button.primary{background:#fffafd;color:#1c161d}.button.glass{border-color:rgba(255,255,255,.2);background:rgba(14,10,17,.3);color:#fff}
+h1{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-weight:600;letter-spacing:-.06em}
+h1 em,h2 em{background:linear-gradient(90deg,#f5a8c6,#c7adff,#9fc6ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.section h2,.contact h2{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-weight:500}
+.scroll-cue{color:#d0c7cd}.scroll-cue span{border-color:rgba(255,255,255,.35)}.scroll-cue span:after{background:#fff}
+.profile-window{width:min(34vw,350px);aspect-ratio:4/5;border:1px solid rgba(255,255,255,.2);border-radius:24px;background:#211a25;box-shadow:0 32px 85px rgba(0,0,0,.46);overflow:hidden;transform:none}
+.profile-window .window-bar,.profile-window figcaption{display:none}.profile-window figure{width:100%;height:100%}.profile-window img{width:100%;height:100%;aspect-ratio:4/5;object-fit:cover;object-position:center}
+.desktop-section{background:linear-gradient(180deg,transparent,var(--bg2) 18%,var(--bg2) 86%,transparent)}
+.project-window{box-shadow:0 35px 90px rgba(0,0,0,.3)}
+.wallpaper-strip figure{box-shadow:0 18px 55px rgba(0,0,0,.22)}
+@media(max-width:850px){.hero-wallpaper{background:linear-gradient(rgba(12,9,15,.86),rgba(12,9,15,.72)),url('assets/images/pink-valley.jpg') center/cover}.profile-window{width:min(76vw,340px)}.intro-grid{grid-template-columns:1fr}}
