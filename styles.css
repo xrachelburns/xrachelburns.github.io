@@ -57,3 +57,7 @@ h1 em,h2 em{background:linear-gradient(90deg,#f5a8c6,#c7adff,#9fc6ff);-webkit-ba
 .project-window{box-shadow:0 35px 90px rgba(0,0,0,.3)}
 .wallpaper-strip figure{box-shadow:0 18px 55px rgba(0,0,0,.22)}
 @media(max-width:850px){.hero-wallpaper{background:linear-gradient(rgba(12,9,15,.86),rgba(12,9,15,.72)),url('assets/images/pink-valley.jpg') center/cover}.profile-window{width:min(76vw,340px)}.intro-grid{grid-template-columns:1fr}}
+
+/* Live interactive guide */
+.guide{transition:transform .8s cubic-bezier(.22,.8,.3,1);transform-origin:center bottom}.guide.facing-left{scale:-1 1}.guide.moving .body{animation:guide-bob .38s ease-in-out infinite alternate}.guide.moving .hair{animation:guide-hair .38s ease-in-out infinite alternate}.map-node{cursor:pointer;transition:transform .2s,background .2s}.map-node:hover{transform:translateY(-3px);background:rgba(49,37,65,.9)}
+@keyframes guide-bob{to{transform:translateY(-4px) rotate(1deg)}}@keyframes guide-hair{to{transform:translateY(-2px) rotate(-2deg)}}
