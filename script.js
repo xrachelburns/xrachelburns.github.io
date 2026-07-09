@@ -105,4 +105,45 @@ if ('IntersectionObserver' in window) {
   sections.forEach((section) => observer.observe(section));
 }
 
-document.querySelector('#year').textContent = new Date().getFullYear();
+const year = document.querySelector('#year');
+if (year) year.textContent = new Date().getFullYear();
+
+const revealTargets = document.querySelectorAll(
+  '.motion-lab, .signal-stack div, .project-card, .course-card, .skill-list article, .wallpaper-strip figure, .map-window'
+);
+
+revealTargets.forEach((target) => target.classList.add('reveal-target'));
+
+if ('IntersectionObserver' in window) {
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.16 }
+  );
+
+  revealTargets.forEach((target) => revealObserver.observe(target));
+} else {
+  revealTargets.forEach((target) => target.classList.add('is-visible'));
+}
+
+const motionLab = document.querySelector('.motion-lab');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (motionLab && !reduceMotion) {
+  motionLab.addEventListener('pointermove', (event) => {
+    const bounds = motionLab.getBoundingClientRect();
+    const rotateX = ((event.clientY - bounds.top) / bounds.height - 0.5) * -4;
+    const rotateY = ((event.clientX - bounds.left) / bounds.width - 0.5) * 4;
+
+    motionLab.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+  });
+
+  motionLab.addEventListener('pointerleave', () => {
+    motionLab.style.transform = 'rotate(.4deg)';
+  });
+}

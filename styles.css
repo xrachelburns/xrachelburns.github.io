@@ -73,3 +73,343 @@ h1 em,h2 em{background:none;color:#e4afc0;-webkit-text-fill-color:currentColor}
 .finder>aside a.active,.finder>aside a:hover{background:rgba(201,139,159,.16)}
 .map-legend .blue,.map-legend .violet{background:var(--pink)}
 .contact-glow{background:radial-gradient(circle at 50% 40%,rgba(201,139,159,.14),transparent 38%)}
+/* Final identity-first direction: no hero portrait, animated logo instead */
+.profile-window{display:none!important}
+.identity-window{justify-self:end;width:min(36vw,410px);min-height:470px;display:flex;flex-direction:column;position:relative;overflow:hidden;transform:rotate(.6deg);border-color:rgba(251,247,243,.16);will-change:transform}
+.status-dot{justify-self:end;color:var(--pink);font-family:"DM Mono",monospace;text-transform:uppercase;font-size:.55rem;letter-spacing:.18em}
+.identity-panel{position:relative;display:grid;place-items:center;align-content:center;gap:24px;flex:1;padding:30px;background:linear-gradient(145deg,rgba(251,247,243,.08),rgba(251,247,243,.015))}
+.identity-panel:before{content:"";position:absolute;inset:-35%;background:radial-gradient(circle at 50% 50%,rgba(201,139,159,.24),transparent 38%);animation:liquid-drift 12s ease-in-out infinite}
+.identity-orb{position:relative;z-index:1;width:190px;aspect-ratio:1;border-radius:38%;display:grid;place-items:center;background:linear-gradient(145deg,rgba(251,247,243,.14),rgba(201,139,159,.18));box-shadow:inset 0 1px rgba(255,255,255,.35),0 26px 70px rgba(0,0,0,.28);overflow:hidden}
+.identity-orb:before{content:"";position:absolute;inset:12px;border:1px solid rgba(255,255,255,.16);border-radius:36%;animation:morph 9s ease-in-out infinite}
+.identity-orb span{position:relative;z-index:2;font-family:Georgia,"Times New Roman",serif;font-size:4.8rem;letter-spacing:-.12em;color:var(--text)}
+.identity-orb i{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--pink);box-shadow:0 0 22px rgba(201,139,159,.7);animation:orbit 8s linear infinite}
+.identity-orb i:nth-child(3){animation-duration:11s;animation-delay:-2s;opacity:.7}
+.identity-orb i:nth-child(4){animation-duration:14s;animation-delay:-5s;opacity:.55}
+.identity-copy{position:relative;z-index:1;text-align:center}
+.identity-copy p{margin:0 0 6px;font-size:1.15rem;font-weight:700}
+.identity-copy span{color:var(--muted);font-size:.76rem}
+.identity-metrics{position:relative;z-index:1;width:100%;display:grid;gap:10px}
+.identity-metrics div{display:flex;justify-content:space-between;gap:18px;padding:11px 13px;border:1px solid var(--line);border-radius:13px;background:rgba(251,247,243,.055);backdrop-filter:blur(14px)}
+.identity-metrics b{color:var(--pink);font-family:"DM Mono",monospace;font-size:.62rem}
+.identity-metrics span{font-size:.72rem;color:var(--muted)}
+.coursework{padding-top:60px}
+.coursework-grid{display:grid;grid-template-columns:.82fr 1.18fr;gap:clamp(34px,6vw,80px);align-items:start}
+.coursework-intro p:not(.overline){color:var(--muted);max-width:520px}
+.course-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.course-card{position:relative;overflow:hidden;padding:18px;border:1px solid var(--line);border-radius:18px;background:rgba(251,247,243,.035);box-shadow:0 18px 45px rgba(0,0,0,.12);backdrop-filter:blur(16px)}
+.course-card:before{content:"";position:absolute;inset:-1px;background:linear-gradient(115deg,transparent,rgba(201,139,159,.18),transparent);transform:translateX(-100%);animation:sheen 8s ease-in-out infinite}
+.course-card span{position:relative;display:inline-flex;margin-bottom:13px;padding:5px 9px;border-radius:99px;background:rgba(201,139,159,.14);color:var(--pink);font-family:"DM Mono",monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.14em}
+.course-card h3,.course-card p{position:relative}
+.course-card h3{margin-bottom:7px;font-size:1rem}
+.course-card p{margin:0;color:var(--muted);font-size:.76rem}
+.course-card.active{background:rgba(201,139,159,.075)}
+.project-card,.course-card,.identity-window,.map-window{transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease}
+.project-card:hover,.course-card:hover,.map-window:hover{transform:translateY(-4px);border-color:rgba(201,139,159,.34);box-shadow:0 28px 80px rgba(0,0,0,.22)}
+.identity-window:hover{border-color:rgba(201,139,159,.34);box-shadow:0 28px 80px rgba(0,0,0,.22)}
+.world{position:relative;overflow:hidden}
+.world:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 15%,rgba(255,255,255,.045) 45%,transparent 70%);transform:translateX(-45%);animation:sheen 10s ease-in-out infinite}
+.reveal-target{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.reveal-target.is-visible{opacity:1;transform:none}
+.identity-window.reveal-target{transform:rotate(.6deg) translateY(18px)}
+.identity-window.reveal-target.is-visible{transform:rotate(.6deg)}
+@keyframes liquid-drift{0%,100%{transform:translate3d(-3%,0,0) rotate(0deg)}50%{transform:translate3d(5%,3%,0) rotate(10deg)}}
+@keyframes morph{0%,100%{border-radius:36% 44% 38% 48%}50%{border-radius:48% 34% 46% 36%}}
+@keyframes orbit{from{transform:rotate(0deg) translateX(82px) rotate(0deg)}to{transform:rotate(360deg) translateX(82px) rotate(-360deg)}}
+@keyframes sheen{0%,60%,100%{transform:translateX(-120%)}78%{transform:translateX(120%)}}
+@media(max-width:850px){.identity-window{width:min(82vw,390px);min-height:410px;justify-self:center}.hero-content,.coursework-grid{grid-template-columns:1fr}.course-list{grid-template-columns:1fr}}
+@media(max-width:520px){.identity-window{width:100%;min-height:380px}.identity-orb{width:160px}.identity-orb span{font-size:4rem}.coursework{padding-top:35px}}
+@media(prefers-reduced-motion:reduce){.identity-panel:before,.identity-orb:before,.identity-orb i,.course-card:before,.world:after{animation:none}.reveal-target{opacity:1;transform:none}}
+
+/* Final motion-logo hero: keep the hero photo-free and animation-forward. */
+.profile-window,
+.identity-window,
+.hero-portrait,
+.profile-card,
+.portrait-card {
+  display: none !important;
+}
+
+.motion-lab {
+  justify-self: end;
+  width: min(36vw, 430px);
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transform: rotate(.4deg);
+  border-color: rgba(251, 247, 243, .16);
+  background: linear-gradient(145deg, rgba(28, 24, 31, .88), rgba(19, 16, 22, .78));
+  box-shadow: 0 34px 95px rgba(0, 0, 0, .34);
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+body.light .motion-lab {
+  background: linear-gradient(145deg, rgba(255, 252, 249, .9), rgba(244, 238, 234, .74));
+  box-shadow: 0 34px 95px rgba(80, 54, 70, .16);
+}
+
+.motion-canvas {
+  position: relative;
+  flex: 1;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 22px;
+  padding: 34px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 36%, rgba(201, 139, 159, .20), transparent 34%),
+    linear-gradient(145deg, rgba(251, 247, 243, .08), rgba(251, 247, 243, .018));
+}
+
+.motion-canvas::before,
+.motion-canvas::after {
+  content: "";
+  position: absolute;
+  inset: auto;
+  pointer-events: none;
+}
+
+.motion-canvas::before {
+  width: 250px;
+  height: 250px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(91, 111, 202, .34), transparent 66%);
+  filter: blur(8px);
+  animation: rb-liquid-drift 9s ease-in-out infinite alternate;
+}
+
+.motion-canvas::after {
+  inset: -40% -70%;
+  background: linear-gradient(100deg, transparent 42%, rgba(255, 255, 255, .14), transparent 58%);
+  transform: rotate(16deg);
+  animation: rb-sheen 6s ease-in-out infinite;
+}
+
+.orbital-mark {
+  position: relative;
+  z-index: 1;
+  width: min(78%, 270px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 38% 30%, rgba(255, 255, 255, .2), transparent 18%),
+    linear-gradient(145deg, rgba(185, 52, 122, .82), rgba(91, 111, 202, .82));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .28),
+    0 28px 80px rgba(16, 12, 24, .38);
+  animation: rb-float-mark 5.5s ease-in-out infinite;
+}
+
+body.light .orbital-mark {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .46),
+    0 24px 65px rgba(128, 70, 101, .22);
+}
+
+.orbital-mark span {
+  font-family: "SF Pro Display", Inter, system-ui, sans-serif;
+  color: white;
+  font-size: clamp(4.5rem, 7vw, 6.6rem);
+  font-weight: 800;
+  letter-spacing: -.11em;
+  transform: translateX(-.04em);
+}
+
+.orbital-mark .ring {
+  position: absolute;
+  inset: -15px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .28);
+  border-left-color: rgba(255, 255, 255, .02);
+  border-bottom-color: rgba(255, 255, 255, .08);
+  animation: rb-spin-ring 8s linear infinite;
+}
+
+.orbital-mark .spark {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fbf7f3;
+  box-shadow: 0 0 24px rgba(251, 247, 243, .8);
+  transform-origin: 115px 115px;
+  animation: rb-orbit 6.2s linear infinite;
+}
+
+.motion-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 300px;
+  text-align: center;
+}
+
+.motion-copy h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(1.15rem, 2.3vw, 1.6rem);
+  line-height: 1.05;
+}
+
+.motion-copy p {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: .82rem;
+  line-height: 1.6;
+}
+
+.motion-copy span {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: .76rem;
+  line-height: 1.5;
+}
+
+.signal-stack {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 300px);
+  display: grid;
+  gap: 9px;
+}
+
+.signal-stack div {
+  --fill: var(--w, 74%);
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+  font-size: .7rem;
+}
+
+.signal-stack b {
+  position: relative;
+  height: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(251, 247, 243, .12);
+}
+
+body.light .signal-stack b {
+  background: rgba(52, 37, 49, .12);
+}
+
+.signal-stack b::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--fill);
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--pink), #5b6fca);
+  transform-origin: left center;
+  animation: rb-fill-signal 2.7s ease-in-out infinite alternate;
+}
+
+.motion-lab .status-dot {
+  width: auto;
+  height: auto;
+  color: var(--pink);
+  background: transparent;
+  box-shadow: none;
+  animation: rb-pulse-live 1.8s ease-in-out infinite;
+}
+
+.motion-lab:hover {
+  border-color: rgba(201, 139, 159, .34);
+  box-shadow: 0 34px 100px rgba(0, 0, 0, .32);
+}
+
+.motion-lab.reveal-target {
+  transform: rotate(.4deg) translateY(18px);
+}
+
+.motion-lab.reveal-target.is-visible {
+  transform: rotate(.4deg);
+}
+
+.project-card,
+.course-card,
+.motion-lab,
+.map-window {
+  transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+}
+
+@keyframes rb-float-mark {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-11px) scale(1.015); }
+}
+
+@keyframes rb-spin-ring {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes rb-orbit {
+  from { transform: rotate(0deg) translateX(135px) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(135px) rotate(-360deg); }
+}
+
+@keyframes rb-pulse-live {
+  50% { opacity: .58; }
+}
+
+@keyframes rb-fill-signal {
+  0% { transform: scaleX(.55); opacity: .75; }
+  100% { transform: scaleX(1); opacity: 1; }
+}
+
+@keyframes rb-liquid-drift {
+  from { transform: translate(-70px, -80px) scale(.9); }
+  to { transform: translate(75px, 82px) scale(1.18); }
+}
+
+@keyframes rb-sheen {
+  0%, 54% { transform: translateX(-30%) rotate(16deg); opacity: 0; }
+  68% { opacity: 1; }
+  100% { transform: translateX(30%) rotate(16deg); opacity: 0; }
+}
+
+@media(max-width:850px) {
+  .motion-lab {
+    width: min(82vw, 390px);
+    min-height: 430px;
+    justify-self: center;
+  }
+}
+
+@media(max-width:520px) {
+  .motion-lab {
+    width: 100%;
+    min-height: 390px;
+  }
+
+  .orbital-mark {
+    width: 190px;
+  }
+
+  .orbital-mark .spark {
+    transform-origin: 82px 82px;
+  }
+
+  @keyframes rb-orbit {
+    from { transform: rotate(0deg) translateX(96px) rotate(0deg); }
+    to { transform: rotate(360deg) translateX(96px) rotate(-360deg); }
+  }
+}
+
+@media(prefers-reduced-motion: reduce) {
+  .orbital-mark,
+  .orbital-mark .ring,
+  .orbital-mark .spark,
+  .motion-canvas::before,
+  .motion-canvas::after,
+  .motion-lab .status-dot,
+  .signal-stack b::after {
+    animation: none;
+  }
+}
