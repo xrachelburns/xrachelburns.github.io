@@ -19,8 +19,9 @@
   <header class="menu-bar">
     <a class="wordmark" href="#home" aria-label="Rachel Burns home"><span>RB</span> Rachel Burns</a>
     <nav aria-label="Primary navigation">
-      <a href="#about">About</a><a href="#work">Work</a><a href="#coursework">Coursework</a><a href="#skills">Skills</a><a href="assets/Rachel-Burns-Resume.pdf" target="_blank" rel="noreferrer">Résumé</a><a href="#contact">Contact</a>
+      <a href="#about" data-i18n="navAbout">About</a><a href="#work" data-i18n="navWork">Work</a><a href="#skills" data-i18n="navSkills">Skills</a><a href="#contact" data-i18n="navContact">Contact</a>
     </nav>
+    <button class="language-toggle" type="button" aria-label="Switch language" aria-pressed="false"><span>EN</span><i>/</i><span>ES</span></button>
     <button class="theme-toggle" type="button" aria-label="Toggle color theme"><span aria-hidden="true">◐</span><span class="theme-label">Light</span></button>
   </header>
 
@@ -29,40 +30,22 @@
       <div class="hero-wallpaper" aria-hidden="true"></div>
       <div class="hero-content">
         <div class="hero-copy">
-          <p class="availability"><i></i> Open to internships & collaboration</p>
-          <h1>Engineering with<br><em>curiosity.</em></h1>
-          <p class="hero-lead">I’m Rachel—a software engineering student building thoughtful, human-centered experiences across the web, cloud, cybersecurity, and AI.</p>
+          <p class="availability"><i></i> <span data-i18n="availability">Open to internships & collaboration</span></p>
+          <h1><span data-i18n="heroTitle">Engineering with</span><br><em data-i18n="heroEmphasis">curiosity.</em></h1>
+          <p class="hero-lead" data-i18n="heroLead">I’m Rachel—a software engineering student building thoughtful, human-centered experiences across the web, cloud, cybersecurity, and AI.</p>
           <div class="actions">
-            <a class="button primary" href="#work">Explore my work <span>↓</span></a>
-            <a class="button glass" href="assets/Rachel-Burns-Resume.pdf" target="_blank" rel="noreferrer">View résumé <span>↗</span></a>
+            <a class="button primary" href="#work"><span data-i18n="exploreWork">Explore my work</span> <span>↓</span></a>
+            <a class="button glass" href="assets/Rachel-Burns-Resume.pdf" target="_blank"><span data-i18n="viewResume">View résumé</span> <span>↗</span></a>
           </div>
         </div>
 
-        <aside class="motion-lab window" aria-label="Animated Rachel Burns portfolio logo">
-          <div class="window-bar">
-            <span class="lights"><i></i><i></i><i></i></span>
-            <span>RB Motion Lab</span>
-            <span class="status-dot">live</span>
-          </div>
-          <div class="motion-canvas">
-            <div class="orbital-mark" aria-hidden="true">
-              <span>RB</span>
-              <i class="ring ring-one"></i>
-              <i class="ring ring-two"></i>
-              <i class="spark spark-one"></i>
-              <i class="spark spark-two"></i>
-            </div>
-            <div class="motion-copy">
-              <p>Interactive portfolio system</p>
-              <h2>Glass UI, motion, and purposeful code.</h2>
-              <span>Hover the mark · Move the guide below · Toggle light/dark</span>
-            </div>
-            <div class="signal-stack" aria-label="Animated skill signals">
-              <div style="--w:86%"><span>Responsive UI</span><b></b></div>
-              <div style="--w:74%"><span>JavaScript motion</span><b></b></div>
-              <div style="--w:66%"><span>Cloud + AI path</span><b></b></div>
-            </div>
-          </div>
+        <aside class="profile-window window" aria-label="Rachel Burns profile">
+          <div class="window-bar"><span class="lights"><i></i><i></i><i></i></span><span>Profile.jpg</span><span></span></div>
+          <figure>
+            <img class="profile-color" src="assets/images/rachel-hero-color.png" alt="Portrait of Rachel Burns wearing glasses">
+            <img class="profile-bw" src="assets/images/rachel-hero-bw.png" alt="" aria-hidden="true">
+            <figcaption><b>Rachel Burns</b><span>Software Engineering · AI</span></figcaption>
+          </figure>
         </aside>
       </div>
       <a class="scroll-cue" href="#about"><span></span> Scroll to explore</a>
@@ -73,22 +56,121 @@
       <div class="intro-grid">
         <div>
           <p class="overline">HELLO, WORLD.</p>
-          <h2>I turn complex ideas into experiences that feel <em>clear.</em></h2>
+          <h2><span data-i18n="aboutTitle">I turn complex ideas into experiences that feel</span> <em data-i18n="aboutEmphasis">clear.</em></h2>
         </div>
         <div class="intro-copy">
-          <p>I'm preparing for an accelerated B.S. Software Engineering / M.S. AI Engineering pathway while building the foundations through focused coursework. I care about software that is useful, accessible, and quietly delightful.</p>
-          <p>My customer-service background taught me to listen carefully, communicate clearly, and stay composed under pressure. Those are engineering skills too—and I bring them to every project.</p>
-          <dl class="facts"><div><dt>Based in</dt><dd>Wisconsin, USA</dd></div><div><dt>Studying</dt><dd>Software Engineering</dd></div><div><dt>Exploring</dt><dd>AI · Cloud · Security</dd></div></dl>
+          <p data-i18n="aboutCopyOne">I'm pursuing an accelerated B.S. Software Engineering / M.S. AI Engineering pathway at Western Governors University. I care about software that is useful, accessible, and quietly delightful.</p>
+          <p data-i18n="aboutCopyTwo">My customer-service background taught me to listen carefully, communicate clearly, and stay composed under pressure. Those are engineering skills too—and I bring them to every project.</p>
+          <dl class="facts"><div><dt data-i18n="basedIn">Based in</dt><dd data-i18n="basedPlace">Wisconsin, USA</dd></div><div><dt data-i18n="studying">Studying</dt><dd data-i18n="studyName">Software Engineering</dd></div><div><dt data-i18n="exploring">Exploring</dt><dd data-i18n="exploreAreas">AI · Cloud · Security</dd></div></dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="section word-section" aria-labelledby="word-title">
+      <div class="section-index"><span>02</span> <span data-i18n="wordIndex">Word of the day</span></div>
+      <div class="word-grid">
+        <div>
+          <p class="overline" data-i18n="wordOverline">DAILY LANGUAGE DROP</p>
+          <h2 id="word-title"><span data-i18n="wordTitle">Two words,</span><br><em data-i18n="wordEmphasis">one fresh reset.</em></h2>
+          <p class="word-copy" data-i18n="wordCopy">The English pick leans advanced; the Spanish pick stays practical while you build confidence.</p>
+        </div>
+        <div class="word-3d-stage" aria-live="polite">
+          <div class="word-halo" aria-hidden="true"></div>
+          <div class="word-ring ring-one" aria-hidden="true"></div>
+          <div class="word-ring ring-two" aria-hidden="true"></div>
+          <span class="floating-glyph glyph-one" aria-hidden="true">Aa</span>
+          <span class="floating-glyph glyph-two" aria-hidden="true">ñ</span>
+          <span class="floating-glyph glyph-three" aria-hidden="true">/</span>
+          <div class="word-cards">
+            <article class="word-card english-word">
+              <span class="word-tag" data-i18n="englishWordLabel">Advanced English</span>
+              <h3 data-word="english-term">Liminal</h3>
+              <p class="pronunciation" data-word="english-pronunciation">LIM-uh-nuhl</p>
+              <p data-word="english-definition">At a threshold or transition point.</p>
+              <small data-word="english-example">She stood in the liminal space between student and engineer.</small>
+            </article>
+            <article class="word-card spanish-word">
+              <span class="word-tag" data-i18n="spanishWordLabel">Spanish practice</span>
+              <h3 data-word="spanish-term">Aprender</h3>
+              <p class="pronunciation" data-word="spanish-pronunciation">ah-pren-DEHR</p>
+              <p data-word="spanish-definition">To learn.</p>
+              <small data-word="spanish-example">Quiero aprender algo nuevo hoy.</small>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section miniature-world" aria-labelledby="world-title">
+      <div class="section-index"><span>03</span> <span data-i18n="worldIndex">Interactive world</span></div>
+      <div class="world-hero">
+        <div class="world-copy">
+          <p class="overline" data-i18n="worldOverline">SEQUOIA MODE</p>
+          <h2 id="world-title"><span data-i18n="worldTitle">A tiny 3D world for everything I’m building.</span></h2>
+          <p data-i18n="worldCopy">Click a station to jump through the portfolio like a miniature landscape: work, learning, music, skills, and contact all become part of the map.</p>
+          <div class="world-palette" aria-label="Miniature world color mode">
+            <button class="active" type="button" data-world-palette="sequoia" data-i18n="paletteSequoia">Sequoia</button>
+            <button type="button" data-world-palette="live" data-i18n="paletteLive">Live Mac</button>
+          </div>
+        </div>
+        <div class="mini-world-stage" aria-label="Interactive miniature portfolio world">
+          <video class="world-live-video" src="assets/video/mac-background-live.m4v" muted loop playsinline preload="metadata" aria-hidden="true"></video>
+          <div class="sequoia-sky"></div>
+          <a class="world-station station-about" href="#about"><span>01</span><b data-i18n="worldAbout">About</b></a>
+          <a class="world-station station-work" href="#work"><span>02</span><b data-i18n="worldWork">Work</b></a>
+          <a class="world-station station-music" href="#ipod-title"><span>03</span><b data-i18n="worldMusic">Music</b></a>
+          <a class="world-station station-skills" href="#skills"><span>04</span><b data-i18n="worldSkills">Skills</b></a>
+          <a class="world-station station-contact" href="#contact"><span>05</span><b data-i18n="worldContact">Contact</b></a>
+          <div class="world-orbit" aria-hidden="true"></div>
+          <div class="world-avatar" aria-hidden="true">RB</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section nami-section" aria-labelledby="nami-title">
+      <div class="section-index"><span>04</span> <span data-i18n="namiIndex">Anime cameos</span></div>
+      <div class="nami-grid">
+        <div class="nami-copy">
+          <p class="overline" data-i18n="namiOverline">LIVE MODEL</p>
+          <h2 id="nami-title"><span data-i18n="namiTitle">Nami dropped by</span><br><em data-i18n="namiEmphasis">the portfolio.</em></h2>
+          <div class="nami-bubble">
+            <p data-i18n="namiQuote">Hi, it’s Nami... Rachel’s alter ego... err, I mean nickname. Haha. Maybe just one of the many anime favorites she’s watched.</p>
+          </div>
+          <div class="nami-bubble killua-bubble">
+            <p data-i18n="killuaFact">Fun fact: Killua is also what Rachel named her baby boy... err, her cat, who is absolutely her baby boy and turned one in May.</p>
+          </div>
+        </div>
+        <div class="anime-model-stack">
+          <div class="nami-model-card" aria-label="Animated 3D model of Nami from One Piece">
+            <div class="sketchfab-embed-wrapper character-model nami-float-model">
+              <iframe title="One Piece - Nami - Anime Model" frameborder="0" allowtransparency="true" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/8a917b3952074e48ade09f8f2d6d4d27/embed?autospin=1&autostart=1&preload=1&transparent=1&ui_infos=0&ui_controls=0&ui_stop=0&ui_watermark=0&ui_watermark_link=0&ui_hint=0&ui_theme=dark"></iframe>
+              <p class="model-credit">
+                <a href="https://sketchfab.com/3d-models/one-piece-nami-anime-model-8a917b3952074e48ade09f8f2d6d4d27?utm_medium=embed&utm_campaign=share-popup&utm_content=8a917b3952074e48ade09f8f2d6d4d27" target="_blank" rel="nofollow">One Piece - Nami - Anime Model</a>
+                by <a href="https://sketchfab.com/gomoo.studio?utm_medium=embed&utm_campaign=share-popup&utm_content=8a917b3952074e48ade09f8f2d6d4d27" target="_blank" rel="nofollow">gomoo.studio</a>
+                on <a href="https://sketchfab.com?utm_medium=embed&utm_campaign=share-popup&utm_content=8a917b3952074e48ade09f8f2d6d4d27" target="_blank" rel="nofollow">Sketchfab</a>
+              </p>
+            </div>
+          </div>
+          <div class="nami-model-card killua-model-card" aria-label="Animated 3D model of Godspeed Killua from Hunter x Hunter">
+            <div class="sketchfab-embed-wrapper character-model killua-float-model">
+              <iframe title="Godspeed Killua" frameborder="0" allowtransparency="true" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share loading="lazy" src="https://sketchfab.com/models/56ce35ab533e4e58838252ea903e8da4/embed?autospin=1&autostart=1&preload=1&transparent=1&ui_infos=0&ui_controls=0&ui_stop=0&ui_watermark=0&ui_watermark_link=0&ui_hint=0&ui_theme=dark"></iframe>
+              <p class="model-credit">
+                <a href="https://sketchfab.com/3d-models/godspeed-killua-56ce35ab533e4e58838252ea903e8da4?utm_medium=embed&utm_campaign=share-popup&utm_content=56ce35ab533e4e58838252ea903e8da4" target="_blank" rel="nofollow">Godspeed Killua</a>
+                by <a href="https://sketchfab.com/notoday?utm_medium=embed&utm_campaign=share-popup&utm_content=56ce35ab533e4e58838252ea903e8da4" target="_blank" rel="nofollow">Notoday</a>
+                on <a href="https://sketchfab.com?utm_medium=embed&utm_campaign=share-popup&utm_content=56ce35ab533e4e58838252ea903e8da4" target="_blank" rel="nofollow">Sketchfab</a>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="desktop-section" id="work">
-      <div class="section section-heading"><div class="section-index"><span>02</span> Selected work</div><p class="overline">BUILT WITH INTENTION</p><h2>A few things I’ve made.</h2></div>
+      <div class="section section-heading"><div class="section-index"><span>05</span> <span data-i18n="workIndex">Selected work</span></div><p class="overline" data-i18n="workOverline">BUILT WITH INTENTION</p><h2 data-i18n="workTitle">A few things I’ve made.</h2></div>
       <div class="project-window window">
         <div class="window-bar"><span class="lights"><i></i><i></i><i></i></span><span>Projects — Finder</span><span class="view-icons">◫  ≡</span></div>
         <div class="finder">
-          <aside><b>Favorites</b><a class="active" href="#work">✦ Projects</a><a href="#skills">⌘ Skills</a><a href="assets/Rachel-Burns-Resume.pdf" target="_blank" rel="noreferrer">▤ Résumé</a><b>Connect</b><a href="https://github.com/xrachelburns" target="_blank" rel="noreferrer">◉ GitHub</a><a href="https://www.linkedin.com/in/xrachelburns" target="_blank" rel="noreferrer">in LinkedIn</a></aside>
+          <aside><b>Favorites</b><a class="active" href="#work">✦ Projects</a><a href="#skills">⌘ Skills</a><a href="assets/Rachel-Burns-Resume.pdf" target="_blank">▤ Résumé</a><b>Connect</b><a href="https://github.com/xrachelburns" target="_blank" rel="noreferrer">◉ GitHub</a><a href="https://www.linkedin.com/in/xrachelburns" target="_blank" rel="noreferrer">in LinkedIn</a></aside>
           <div class="project-grid">
             <article class="project-card featured">
               <div class="project-art fitness"><div class="mini-browser"><i></i><i></i><i></i><span></span></div><b>ABC</b><small>FITNESS STUDIO</small></div>
@@ -102,16 +184,16 @@
     </section>
 
     <section class="journey section" aria-labelledby="journey-title">
-      <div class="section-index"><span>03</span> Interactive journey</div>
+      <div class="section-index"><span>06</span> <span data-i18n="routeIndex">Learning route</span></div>
       <div class="journey-grid">
-        <div><p class="overline">A SMALL DIGITAL WORLD</p><h2 id="journey-title">Meet your guide.</h2><p>Navigate Rachel's learning landscape with <kbd>WASD</kbd> or the arrow keys. The tiny anime-inspired guide adds a little personality while keeping the focus on the work.</p><div class="map-legend"><span><i class="pink"></i> Web</span><span><i class="blue"></i> Cloud</span><span><i class="violet"></i> AI</span></div></div>
+        <div><p class="overline" data-i18n="routeOverline">A FOCUSED PATH</p><h2 id="journey-title" data-i18n="routeTitle">What I’m building toward.</h2><p data-i18n="routeCopy">A quiet view of the skills I’m connecting as I grow from web fundamentals into cloud, security, and applied AI.</p><div class="map-legend"><span><i class="pink"></i> Web</span><span><i class="blue"></i> Cloud</span><span><i class="violet"></i> AI</span></div></div>
         <div class="map-window window">
-          <div class="window-bar"><span class="lights"><i></i><i></i><i></i></span><span>Learning Map</span><button class="map-reset" type="button">Reset</button></div>
-          <div class="world" tabindex="0" aria-label="Interactive learning map. Use WASD or arrow keys to move the guide.">
-            <div class="map-grid"></div><div class="path path-h"></div><div class="path path-v"></div>
-            <span class="map-node web">&lt;/&gt;<b>Web</b></span><span class="map-node cloud">☁<b>Cloud</b></span><span class="map-node ai">✦<b>AI</b></span><span class="map-node security">⌾<b>Security</b></span>
-            <div class="guide" aria-hidden="true"><i class="hair"></i><i class="face"><b></b><b></b></i><i class="body"></i><i class="spark">✦</i></div>
-            <p class="map-status">Guide online · Use arrow keys</p>
+          <div class="window-bar"><span class="lights"><i></i><i></i><i></i></span><span>Learning Route</span><span></span></div>
+          <div class="world route-board" aria-label="Learning route from web foundations to cloud, security, and AI.">
+            <div class="map-grid"></div><div class="route-line"></div><div class="route-glow"></div>
+            <button class="map-node web" type="button" data-nami-sound data-route-x="-190" data-route-y="-130" data-route-label="Web foundations">&lt;/&gt;<b>Web</b></button><button class="map-node cloud" type="button" data-nami-sound data-route-x="190" data-route-y="-110" data-route-label="Cloud systems">☁<b>Cloud</b></button><button class="map-node ai" type="button" data-nami-sound data-route-x="-160" data-route-y="130" data-route-label="Applied AI">✦<b>AI</b></button><button class="map-node security" type="button" data-nami-sound data-route-x="180" data-route-y="130" data-route-label="Cybersecurity">⌾<b>Security</b></button>
+            <div class="route-marker" aria-hidden="true"><span class="marker-pulse"></span><span class="marker-ring"></span><span class="marker-arrow"></span><span class="marker-core"><b>RB</b></span><span class="marker-trail"></span></div>
+            <p class="map-status">Systems thinking · User-centered software · AI foundations</p>
           </div>
         </div>
       </div>
@@ -119,34 +201,98 @@
 
     <section class="wallpaper-strip" aria-label="Creative inspiration gallery"><figure><img src="assets/images/lake-twilight.jpg" alt="Illustrated mountain lake at violet twilight"><figcaption>Wonder</figcaption></figure><figure><img src="assets/images/coastline-road.jpg" alt="Scenic road winding along a mountain coast"><figcaption>Direction</figcaption></figure><figure><img src="assets/images/color-waves.jpg" alt="Flowing colorful abstract waves"><figcaption>Flow</figcaption></figure></section>
 
-    <section class="section coursework" id="coursework">
-      <div class="section-index"><span>04</span> Coursework</div>
-      <div class="coursework-grid">
-        <div class="coursework-intro">
-          <p class="overline">CURRENTLY STUDYING</p>
-          <h2>Building the foundation for <em>software + AI.</em></h2>
-          <p>I’m focusing on practical programming, computer science fundamentals, cloud literacy, Java, and agile software delivery.</p>
+    <section class="section ipod-section" aria-labelledby="ipod-title">
+      <div class="section-index"><span>07</span> <span data-i18n="ipodIndex">Now playing</span></div>
+      <div class="ipod-grid">
+        <div>
+          <p class="overline" data-i18n="ipodOverline">PRESS PLAY</p>
+          <h2 id="ipod-title"><span data-i18n="ipodTitle">A little soundtrack</span><br><em data-i18n="ipodEmphasis">for the scroll.</em></h2>
+          <p class="ipod-copy">RÜFÜS DU SOL · On My Knees</p>
+          <a class="ipod-link" href="https://music.apple.com/us/album/on-my-knees/1585865534?i=1585865541" target="_blank" rel="noreferrer">Open in Apple Music ↗</a>
         </div>
-        <div class="course-list">
-          <article class="course-card active"><span>Enrolled</span><h3>Intro to Python</h3><p>Programming fundamentals, problem solving, and clean code habits.</p></article>
-          <article class="course-card active"><span>Enrolled</span><h3>Computer Science 303</h3><p>Core computer science concepts and software engineering foundations.</p></article>
-          <article class="course-card"><span>Planned</span><h3>Scrum.org PSM I</h3><p>Professional Scrum Master I preparation for agile software teams.</p></article>
-          <article class="course-card"><span>Planned</span><h3>AWS Certified Cloud Practitioner</h3><p>CLF-C02 cloud fundamentals, services, security, and pricing concepts.</p></article>
-          <article class="course-card"><span>Planned</span><h3>Java Foundations</h3><p>Object-oriented programming and Java language fundamentals.</p></article>
-          <article class="course-card"><span>Planned</span><h3>Java Frameworks</h3><p>Framework-based application structure and backend development patterns.</p></article>
+        <div class="ipod-stage" aria-label="Interactive iPod music player for On My Knees by RÜFÜS DU SOL">
+          <img class="ipod-reference" src="assets/images/ipod-reference.png" alt="" aria-hidden="true">
+          <div class="ipod-device">
+            <div class="ipod-screen">
+              <div class="ipod-top"><span>iPod</span><span class="battery"></span></div>
+              <div class="ipod-track">
+                <span class="ipod-state">Starts at 0:00</span>
+                <strong>On My Knees</strong>
+                <em>RÜFÜS DU SOL</em>
+                <div class="ipod-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+              </div>
+            </div>
+            <div class="ipod-wheel">
+              <span class="wheel-menu">menu</span>
+              <span class="wheel-back">◀◀</span>
+              <span class="wheel-next">▶▶</span>
+              <button class="ipod-play" type="button" data-ipod-play aria-label="Open On My Knees from the beginning in Apple Music" aria-pressed="false">▶</button>
+              <span class="wheel-bottom">▶Ⅱ</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="section skills" id="skills">
-      <div class="section-index"><span>05</span> Toolkit</div>
-      <div class="skills-grid"><div><p class="overline">CURRENTLY LOADING...</p><h2>Strong foundations.<br><em>Expanding range.</em></h2></div><div class="skill-list"><article><span>01</span><div><h3>Languages</h3><p>HTML · CSS · JavaScript · Python · SQL</p></div></article><article><span>02</span><div><h3>Technologies</h3><p>Git · GitHub · AWS · Linux · VS Code</p></div></article><article><span>03</span><div><h3>Concepts</h3><p>Responsive design · Networking · Cybersecurity · Relational databases · OOP · Scrum</p></div></article><article><span>04</span><div><h3>Learning next</h3><p>Intelligent systems · Responsible AI · Production machine learning</p></div></article></div></div>
+      <div class="section-index"><span>08</span> <span data-i18n="skillsIndex">Toolkit</span></div>
+      <div class="skills-grid"><div><p class="overline" data-i18n="skillsOverline">CURRENTLY LOADING...</p><h2><span data-i18n="skillsTitle">Strong foundations.</span><br><em data-i18n="skillsEmphasis">Expanding range.</em></h2></div><div class="skill-list"><article><span>01</span><div><h3 data-i18n="languages">Languages</h3><p>HTML · CSS · JavaScript · Python · SQL</p></div></article><article><span>02</span><div><h3 data-i18n="technologies">Technologies</h3><p>Git · GitHub · AWS · Linux · VS Code</p></div></article><article><span>03</span><div><h3 data-i18n="concepts">Concepts</h3><p data-i18n="conceptsCopy">Responsive design · Networking · Cybersecurity · Relational databases · OOP · Scrum</p></div></article><article><span>04</span><div><h3 data-i18n="learningNext">Learning next</h3><p data-i18n="learningCopy">Intelligent systems · Responsible AI · Production machine learning</p></div></article></div></div>
+    </section>
+
+    <section class="section connect-section" aria-labelledby="chat-title">
+      <div class="section-index"><span>09</span> <span data-i18n="chatIndex">Live contact</span></div>
+      <div class="connect-grid">
+        <div>
+          <p class="overline" data-i18n="chatOverline">SERIOUS INQUIRIES ONLY</p>
+          <h2 id="chat-title"><span data-i18n="chatTitle">Shoot me a message</span><br><em data-i18n="chatEmphasis">if you want to chat.</em></h2>
+          <p class="chat-copy" data-i18n="chatCopy">Drop a quick note about the opportunity, project, or collaboration. It is styled like a live 3D chat and ready to connect to private SMS delivery.</p>
+          <div class="visitor-counter" aria-live="polite">
+            <span data-i18n="visitorLabel">Visits since launch</span>
+            <strong data-visitor-count>0001</strong>
+            <small data-i18n="visitorSince">Tracking from July 10, 2026</small>
+          </div>
+        </div>
+        <div class="chat-3d-stage" aria-label="Immersive message form">
+          <div class="chat-orbit orbit-a" aria-hidden="true"></div>
+          <div class="chat-orbit orbit-b" aria-hidden="true"></div>
+          <form class="chat-card" data-chat-form>
+            <div class="chat-topline">
+              <span class="chat-status"><i></i><span data-i18n="chatStatus">Live message portal</span></span>
+              <span class="chat-date">07.10</span>
+            </div>
+            <label>
+              <span data-i18n="chatName">Your name</span>
+              <input name="name" autocomplete="name" required placeholder="Jane Doe">
+            </label>
+            <label>
+              <span data-i18n="chatReply">Reply email</span>
+              <input name="email" type="email" autocomplete="email" required placeholder="you@example.com">
+            </label>
+            <label>
+              <span data-i18n="chatMessage">Message</span>
+              <textarea name="message" rows="5" required placeholder="Hi Rachel, I’d love to connect about..."></textarea>
+            </label>
+            <button class="button primary chat-submit" type="submit"><span data-i18n="chatSend">Send message</span> <span>↗</span></button>
+            <p class="chat-note" data-chat-note data-i18n="chatNote">Opens your email app for now; SMS delivery can be connected privately after launch.</p>
+          </form>
+        </div>
+      </div>
     </section>
 
     <section class="contact" id="contact">
-      <div class="contact-glow"></div><p class="overline">ONE MORE THING...</p><h2>Let’s build something<br><em>worth remembering.</em></h2><p>I’m growing my experience one thoughtful project at a time. If you’re working in software, cloud, cybersecurity, or AI, I’d love to connect.</p><div class="actions"><a class="button primary" href="mailto:dossier@xrachelburns.com">Start a conversation <span>↗</span></a><a class="button glass" href="https://www.linkedin.com/in/xrachelburns" target="_blank" rel="noreferrer">LinkedIn</a><a class="button glass" href="https://github.com/xrachelburns" target="_blank" rel="noreferrer">GitHub</a></div>
+      <div class="contact-glow"></div><p class="overline" data-i18n="contactOverline">ONE MORE THING...</p><h2><span data-i18n="contactTitle">Let’s build something</span><br><em data-i18n="contactEmphasis">worth remembering.</em></h2><p data-i18n="contactCopy">I’m growing my experience one thoughtful project at a time. If you’re working in software, cloud, cybersecurity, or AI, I’d love to connect.</p><div class="actions"><a class="button primary" href="mailto:dossier@xrachelburns.com" data-nami-sound>Háblame <span>↗</span></a><a class="button glass" href="https://www.linkedin.com/in/xrachelburns" target="_blank" rel="noreferrer">LinkedIn</a><a class="button glass" href="https://github.com/xrachelburns" target="_blank" rel="noreferrer">GitHub</a></div>
     </section>
   </main>
+
+  <aside class="ipod-floating-player" aria-label="Floating iPod song player for On My Knees by RÜFÜS DU SOL">
+    <img src="assets/images/ipod-reference.png" alt="" aria-hidden="true">
+    <div class="ipod-float-copy">
+      <span class="ipod-float-state">Starts at 0:00</span>
+      <strong>On My Knees</strong>
+      <em>RÜFÜS DU SOL</em>
+    </div>
+    <button class="ipod-float-play" type="button" data-ipod-play aria-label="Open On My Knees from the beginning in Apple Music" aria-pressed="false">▶</button>
+  </aside>
 
   <footer><a class="wordmark" href="#home"><span>RB</span> Rachel Burns</a><p>Designed with curiosity. Built with care.</p><p>© <span id="year"></span></p></footer>
 </body>
