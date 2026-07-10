@@ -200,3 +200,16 @@ h1 em,h2 em{background:linear-gradient(90deg,var(--sun),var(--coral),#8fcfff,var
 @media(max-width:960px){.luffy-grid{grid-template-columns:1fr}.luffy-stage{min-height:430px}.luffy-float-model{width:270px!important;height:360px!important}.luffy-float-model iframe{transform:translate(-50%,-50%) scale(.58)!important}}
 @media(max-width:620px){.luffy-section{padding-top:36px}.luffy-stage{min-height:360px}.luffy-float-model{width:230px!important;height:320px!important;max-width:76vw!important}.luffy-float-model iframe{transform:translate(-50%,-50%) scale(.5)!important}.luffy-aura{width:86vw}}
 @media(prefers-reduced-motion:reduce){.luffy-aura{animation:none}.luffy-stage:hover .luffy-float-model{transform:none!important}}
+
+/* Keep the page simpler: no old maps or image strips */
+.journey,.wallpaper-strip{display:none!important}
+.floating-luffy{position:fixed;top:104px;right:clamp(14px,3vw,38px);z-index:24;width:clamp(150px,15vw,230px);height:clamp(190px,20vw,290px);pointer-events:auto}
+.floating-luffy:before{content:"";position:absolute;inset:18% 12% 8%;z-index:-1;border:1px solid rgba(255,217,154,.28);border-radius:50%;background:radial-gradient(circle,rgba(255,217,154,.16),rgba(0,120,215,.12) 46%,transparent 70%);filter:blur(.2px);transform:rotateX(68deg);animation:luffy-aura-spin 14s linear infinite}
+.floating-luffy .luffy-float-model{width:100%!important;height:100%!important;max-width:none!important;animation:character-float-small 5.8s ease-in-out infinite!important}
+.floating-luffy .luffy-float-model iframe{width:520px!important;height:430px!important;transform:translate(-50%,-50%) scale(.48)!important}
+.floating-luffy .model-credit{position:absolute!important;left:50%;bottom:-14px;transform:translateX(-50%);width:190px!important;margin:0!important;opacity:.18!important;font-size:.42rem!important;line-height:1.18!important;transition:opacity .2s ease}
+.floating-luffy:hover .model-credit{opacity:.72!important}
+.floating-luffy:hover .luffy-float-model{filter:saturate(1.12)}
+@media(max-width:900px){.floating-luffy{top:92px;width:135px;height:175px}.floating-luffy .luffy-float-model iframe{transform:translate(-50%,-50%) scale(.4)!important}}
+@media(max-width:620px){.floating-luffy{top:82px;right:6px;width:104px;height:142px}.floating-luffy .luffy-float-model iframe{transform:translate(-50%,-50%) scale(.31)!important}.floating-luffy .model-credit{display:none}}
+@media(prefers-reduced-motion:reduce){.floating-luffy:before,.floating-luffy .luffy-float-model{animation:none!important}}
