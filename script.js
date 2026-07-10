@@ -54,36 +54,6 @@ if ('IntersectionObserver' in window) {
   sections.forEach((section) => observer.observe(section));
 }
 
-const routeBoard = document.querySelector('.route-board');
-const routeMarker = document.querySelector('.route-marker');
-const routeStatus = document.querySelector('.map-status');
-const routeNodes = document.querySelectorAll('.map-node');
-
-routeNodes.forEach((node) => {
-  node.addEventListener('click', () => {
-    const boardRect = routeBoard?.getBoundingClientRect();
-    const markerRect = routeMarker?.getBoundingClientRect();
-    const nodeRect = node.getBoundingClientRect();
-    const x = boardRect && markerRect ? nodeRect.left + (nodeRect.width / 2) - (boardRect.left + (boardRect.width / 2)) : Number(node.dataset.routeX) || 0;
-    const y = boardRect && markerRect ? nodeRect.top + (nodeRect.height / 2) - (boardRect.top + (boardRect.height / 2)) : Number(node.dataset.routeY) || 0;
-    const label = node.dataset.routeLabel || node.textContent.trim();
-
-    routeMarker?.style.setProperty('--x', `${x}px`);
-    routeMarker?.style.setProperty('--y', `${y}px`);
-    routeMarker?.classList.toggle('facing-left', x < 0);
-    routeMarker?.classList.add('moving');
-    if (routeStatus) {
-      routeStatus.textContent = `${label} · Click another stop to keep exploring`;
-    }
-
-    window.setTimeout(() => routeMarker?.classList.remove('moving'), 580);
-  });
-});
-
-routeBoard?.addEventListener('pointerenter', () => {
-  routeBoard.classList.add('is-ready');
-});
-
 document.querySelectorAll('[data-nami-sound]').forEach((trigger) => {
   trigger.addEventListener('click', (event) => {
     if (trigger.matches('a[href^="mailto:"]')) {
@@ -305,8 +275,8 @@ const translations = {
     killuaFact: 'Fun fact: Killua is also what Rachel named her baby boy... err, her cat, who is absolutely her baby boy and turned one in May.',
     worldAbout: 'About', worldWork: 'Work', worldMusic: 'Music', worldSkills: 'Skills', worldContact: 'Contact',
     workIndex: 'Selected work', workOverline: 'BUILT WITH INTENTION', workTitle: 'A few things I’ve made.',
-    routeIndex: 'Learning route', routeOverline: 'A FOCUSED PATH', routeTitle: 'What I’m building toward.',
-    routeCopy: 'A quiet view of the skills I’m connecting as I grow from web fundamentals into cloud, security, and applied AI.',
+    luffyIndex: 'Floating cameo', luffyOverline: 'GEAR 5 ENERGY', luffyTitle: 'Luffy floats in', luffyEmphasis: 'for the side quest.',
+    luffyCopy: 'A tiny animated One Piece cameo for the page, because sometimes the portfolio needs a little extra chaos and motion.',
     ipodIndex: 'Now playing', ipodOverline: 'PRESS PLAY', ipodTitle: 'A little soundtrack', ipodEmphasis: 'for the scroll.',
     skillsIndex: 'Toolkit', skillsOverline: 'CURRENTLY LOADING...', skillsTitle: 'Strong foundations.', skillsEmphasis: 'Expanding range.',
     languages: 'Languages', technologies: 'Technologies', concepts: 'Concepts', conceptsCopy: 'Responsive design · Networking · Cybersecurity · Relational databases · OOP · Scrum',
@@ -340,8 +310,8 @@ const translations = {
     killuaFact: 'Dato curioso: Killua también es el nombre que Rachel le puso a su bebé... digo, a su gato, que definitivamente es su bebé y cumplió un año en mayo.',
     worldAbout: 'Sobre mí', worldWork: 'Proyectos', worldMusic: 'Música', worldSkills: 'Skills', worldContact: 'Contacto',
     workIndex: 'Proyectos destacados', workOverline: 'HECHO CON INTENCIÓN', workTitle: 'Algunas cosas que he creado.',
-    routeIndex: 'Ruta de aprendizaje', routeOverline: 'UN CAMINO ENFOCADO', routeTitle: 'Hacia dónde estoy construyendo.',
-    routeCopy: 'Una vista tranquila de las habilidades que estoy conectando mientras avanzo de fundamentos web hacia nube, seguridad e IA aplicada.',
+    luffyIndex: 'Cameo flotante', luffyOverline: 'ENERGIA GEAR 5', luffyTitle: 'Luffy flota en', luffyEmphasis: 'la side quest.',
+    luffyCopy: 'Un pequeno cameo animado de One Piece para la pagina, porque a veces el portfolio necesita un poco mas de caos y movimiento.',
     ipodIndex: 'Sonando ahora', ipodOverline: 'DALE PLAY', ipodTitle: 'Un soundtrack pequeño', ipodEmphasis: 'para scrollear.',
     skillsIndex: 'Herramientas', skillsOverline: 'CARGANDO...', skillsTitle: 'Bases sólidas.', skillsEmphasis: 'Rango en expansión.',
     languages: 'Lenguajes', technologies: 'Tecnologías', concepts: 'Conceptos', conceptsCopy: 'Diseño responsive · Redes · Ciberseguridad · Bases de datos relacionales · OOP · Scrum',

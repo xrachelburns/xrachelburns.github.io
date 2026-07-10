@@ -167,7 +167,7 @@ main:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
 .menu-bar{background:rgba(6,25,73,.62)!important;border-color:rgba(255,247,231,.24)!important;box-shadow:0 18px 55px rgba(3,12,35,.28)!important}
 .wordmark span,.folder-icon,.folder-icon.coral{background:linear-gradient(135deg,var(--coral),var(--sun))!important;color:#09225f}
 h1 em,h2 em{background:linear-gradient(90deg,var(--sun),var(--coral),#8fcfff,var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
-.section,.desktop-section,.journey,.skills,.word-section,.nami-section,.miniature-world,.connect-section{background:transparent!important}
+.section,.desktop-section,.journey,.skills,.word-section,.nami-section,.miniature-world,.connect-section,.luffy-section{background:transparent!important}
 .desktop-section{padding-top:25px}
 .window,.project-window,.map-window,.project-card,.word-card,.nami-bubble,.visitor-counter,.chat-card,.mini-world-stage,.ipod-stage,.ipod-floating-player{background:rgba(7,24,68,.58)!important;border-color:rgba(255,247,231,.2)!important;box-shadow:0 28px 80px rgba(3,12,35,.28),inset 0 1px rgba(255,247,231,.1)!important;backdrop-filter:blur(18px) saturate(1.22)}
 .project-card,.word-card,.nami-bubble,.visitor-counter{background:linear-gradient(145deg,rgba(7,24,68,.64),rgba(15,45,105,.38))!important}
@@ -182,3 +182,21 @@ h1 em,h2 em{background:linear-gradient(90deg,var(--sun),var(--coral),#8fcfff,var
 .contact{background:linear-gradient(rgba(6,25,73,.28),rgba(6,25,73,.72)),url('assets/images/macos-sequoia-wallpaper.jpg') center/cover!important}
 .contact-glow{background:radial-gradient(circle at 50% 35%,rgba(255,217,154,.22),transparent 34%),radial-gradient(circle at 70% 60%,rgba(0,120,215,.18),transparent 34%)!important}
 @media(prefers-reduced-motion:reduce){.ambient:after{transition:none;transform:none}}
+
+/* Luffy floating cameo */
+.luffy-section{padding-top:clamp(50px,8vw,110px);padding-bottom:clamp(70px,10vw,130px)}
+.luffy-grid{width:min(100%,var(--max));margin:0 auto;display:grid;grid-template-columns:.72fr 1fr;gap:clamp(38px,7vw,90px);align-items:center}
+.luffy-copy p:not(.overline){max-width:520px;color:var(--muted);font-size:1rem;line-height:1.75}
+.luffy-stage{position:relative;min-height:clamp(360px,48vw,560px);display:grid;place-items:center;isolation:isolate;perspective:1100px}
+.luffy-aura{position:absolute;width:min(72vw,520px);aspect-ratio:1;border:1px solid rgba(255,217,154,.34);border-radius:50%;background:radial-gradient(circle at 50% 50%,rgba(255,247,231,.2),rgba(255,138,82,.14) 32%,rgba(0,120,215,.12) 58%,transparent 68%);filter:blur(.2px);transform:rotateX(68deg) rotateZ(-12deg);animation:luffy-aura-spin 16s linear infinite;pointer-events:none}
+.luffy-aura:before,.luffy-aura:after{content:"";position:absolute;border-radius:50%;background:var(--sun);box-shadow:0 0 18px rgba(255,217,154,.88),0 0 42px rgba(255,138,82,.4)}
+.luffy-aura:before{top:13%;left:48%;width:14px;height:14px}
+.luffy-aura:after{right:15%;bottom:24%;width:9px;height:9px;background:var(--blue);box-shadow:0 0 18px rgba(0,120,215,.84),0 0 42px rgba(0,120,215,.36)}
+.luffy-float-model{width:300px!important;height:390px!important;max-width:58vw!important;transition:transform .35s ease,filter .35s ease}
+.luffy-float-model iframe{width:700px!important;height:560px!important;transform:translate(-50%,-50%) scale(.66)!important}
+.luffy-stage:hover .luffy-float-model{transform:translateY(-10px) rotateX(3deg) rotateY(-5deg)!important;filter:saturate(1.14)}
+.luffy-stage:hover .luffy-aura{animation-duration:8s}
+@keyframes luffy-aura-spin{to{rotate:360deg}}
+@media(max-width:960px){.luffy-grid{grid-template-columns:1fr}.luffy-stage{min-height:430px}.luffy-float-model{width:270px!important;height:360px!important}.luffy-float-model iframe{transform:translate(-50%,-50%) scale(.58)!important}}
+@media(max-width:620px){.luffy-section{padding-top:36px}.luffy-stage{min-height:360px}.luffy-float-model{width:230px!important;height:320px!important;max-width:76vw!important}.luffy-float-model iframe{transform:translate(-50%,-50%) scale(.5)!important}.luffy-aura{width:86vw}}
+@media(prefers-reduced-motion:reduce){.luffy-aura{animation:none}.luffy-stage:hover .luffy-float-model{transform:none!important}}
