@@ -226,7 +226,10 @@ chatForm?.addEventListener('submit', (event) => {
   if (chatNote) {
     chatNote.textContent = 'Opening your email app so the full message can send safely.';
   }
-  window.location.href = `mailto:dossier@xrachelburns.com?subject=${subject}&body=${body}`;
+  playNamiSound();
+  window.setTimeout(() => {
+    window.location.href = `mailto:dossier@xrachelburns.com?subject=${subject}&body=${body}`;
+  }, 900);
 });
 
 const updateVisitorCounter = async () => {
