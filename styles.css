@@ -213,3 +213,45 @@ h1 em,h2 em{background:linear-gradient(90deg,var(--sun),var(--coral),#8fcfff,var
 @media(max-width:900px){.floating-luffy{top:92px;width:135px;height:175px}.floating-luffy .luffy-float-model iframe{transform:translate(-50%,-50%) scale(.4)!important}}
 @media(max-width:620px){.floating-luffy{top:82px;right:6px;width:104px;height:142px}.floating-luffy .luffy-float-model iframe{transform:translate(-50%,-50%) scale(.31)!important}.floating-luffy .model-credit{display:none}}
 @media(prefers-reduced-motion:reduce){.floating-luffy:before,.floating-luffy .luffy-float-model{animation:none!important}}
+
+/* Transparent character-only Sketchfab cameos */
+main,
+.floating-luffy,
+.luffy-stage,
+.anime-model-stack,
+.nami-model-card,
+.killua-model-card,
+.anime-model-stack .nami-model-card,
+.anime-model-stack .killua-model-card,
+.sketchfab-embed-wrapper.character-model{
+  isolation:auto!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+}
+.sketchfab-embed-wrapper.character-model{
+  mix-blend-mode:multiply;
+}
+.floating-luffy:before,
+.luffy-aura,
+.nami-orbit,
+.killua-orbit,
+.sketchfab-embed-wrapper.character-model:before,
+.sketchfab-embed-wrapper.character-model:after{
+  display:none!important;
+}
+.sketchfab-embed-wrapper.character-model iframe{
+  background-color:transparent!important;
+  box-shadow:none!important;
+  filter:saturate(1.18) contrast(1.08)!important;
+  mix-blend-mode:multiply!important;
+}
+.sketchfab-embed-wrapper.character-model .model-credit,
+.floating-luffy .model-credit{
+  display:none!important;
+}
+
+body.light .sketchfab-embed-wrapper.character-model iframe{
+  mix-blend-mode:multiply;
+}

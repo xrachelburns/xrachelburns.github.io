@@ -17,6 +17,49 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 updateSequoiaShift();
 
+document.querySelectorAll('.journey, .wallpaper-strip').forEach((section) => section.remove());
+
+const initializeTransparentSketchfabModels = () => {
+  if (!window.Sketchfab) return;
+
+  document.querySelectorAll('[data-sketchfab-uid]').forEach((iframe) => {
+    const uid = iframe.dataset.sketchfabUid;
+    if (!uid || iframe.dataset.sketchfabApiReady) return;
+
+    const client = new window.Sketchfab(iframe);
+    client.init(uid, {
+      autostart: 1,
+      preload: 1,
+      transparent: 1,
+      ui_infos: 0,
+      ui_controls: 0,
+      ui_stop: 0,
+      ui_watermark: 0,
+      ui_watermark_link: 0,
+      ui_hint: 0,
+      ui_ar: 0,
+      ui_vr: 0,
+      ui_settings: 0,
+      ui_fullscreen: 0,
+      ui_help: 0,
+      ui_inspector: 0,
+      ui_annotations: 0,
+      dnt: 1,
+      success(api) {
+        iframe.dataset.sketchfabApiReady = 'true';
+        api.start();
+        api.addEventListener('viewerready', () => {
+          if (typeof api.setBackground === 'function') {
+            api.setBackground({ transparent: true });
+          }
+        });
+      }
+    });
+  });
+};
+
+window.addEventListener('load', initializeTransparentSketchfabModels);
+
 if (savedTheme === 'light') {
   body.classList.add('light');
   themeLabel.textContent = 'Dark';
@@ -32,7 +75,10 @@ themeButton.addEventListener('click', () => {
 const namiSound = new Audio('assets/audio/one-piece-nami.mp3');
 namiSound.preload = 'auto';
 namiSound.volume = 0.72;
-const ipodFullTrackUrl = 'https://music.apple.com/us/album/on-my-knees/1585865534?i=1585865541';
+const ipodTrack = new Audio('assets/audio/on-my-knees.mp3');
+ipodTrack.preload = 'auto';
+ipodTrack.volume = 0.74;
+let ipodTrackMissing = false;
 
 const playNamiSound = () => {
   namiSound.pause();
@@ -73,24 +119,56 @@ const ipodStage = document.querySelector('.ipod-stage');
 const ipodPlayButtons = document.querySelectorAll('[data-ipod-play]');
 const ipodStates = document.querySelectorAll('.ipod-state, .ipod-float-state');
 
-const setIpodState = (isOpening) => {
-  document.body.classList.toggle('ipod-playing', isOpening);
+const setIpodState = (status) => {
+  const isPlaying = status === 'playing';
+  document.body.classList.toggle('ipod-playing', isPlaying);
   ipodPlayButtons.forEach((button) => {
-    button.setAttribute('aria-pressed', String(isOpening));
-    button.textContent = isOpening ? '↗' : '▶';
-    button.setAttribute('aria-label', 'Open On My Knees from the beginning in Apple Music');
+    button.setAttribute('aria-pressed', String(isPlaying));
+    button.textContent = isPlaying ? 'Ⅱ' : '▶';
+    button.setAttribute('aria-label', isPlaying ? 'Pause On My Knees' : 'Play On My Knees from the beginning');
   });
   ipodStates.forEach((state) => {
-    state.textContent = isOpening ? 'Opening full song' : 'Starts at 0:00';
+    if (status === 'missing') {
+      state.textContent = 'Missing song file';
+    } else if (status === 'paused') {
+      state.textContent = 'Paused';
+    } else {
+      state.textContent = isPlaying ? 'Playing from 0:00' : 'Starts at 0:00';
+    }
   });
 };
 
+ipodTrack.addEventListener('ended', () => setIpodState('ready'));
+ipodTrack.addEventListener('error', () => {
+  ipodTrackMissing = true;
+  setIpodState('missing');
+});
+
+const toggleIpodPlayback = () => {
+  if (ipodTrackMissing) {
+    setIpodState('missing');
+    return;
+  }
+
+  if (!ipodTrack.paused) {
+    ipodTrack.pause();
+    setIpodState('paused');
+    return;
+  }
+
+  ipodTrack.currentTime = 0;
+  ipodTrack.play()
+    .then(() => setIpodState('playing'))
+    .catch(() => setIpodState('paused'));
+};
+
 ipodPlayButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    setIpodState(true);
-    window.open(ipodFullTrackUrl, '_blank', 'noopener,noreferrer');
-    window.setTimeout(() => setIpodState(false), 1800);
-  });
+  button.addEventListener('click', toggleIpodPlayback);
+});
+
+ipodStage?.addEventListener('click', (event) => {
+  if (event.target.closest('[data-ipod-play]')) return;
+  toggleIpodPlayback();
 });
 
 ipodStage?.addEventListener('pointermove', (event) => {
@@ -174,6 +252,18 @@ const applyDailyWords = () => {
 
 applyDailyWords();
 
+const scheduleDailyWordRefresh = () => {
+  const now = new Date();
+  const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  const delay = Math.max(1000, nextMidnight.getTime() - now.getTime() + 1000);
+  window.setTimeout(() => {
+    applyDailyWords();
+    scheduleDailyWordRefresh();
+  }, delay);
+};
+
+scheduleDailyWordRefresh();
+
 const wordStage = document.querySelector('.word-3d-stage');
 
 wordStage?.addEventListener('pointermove', (event) => {
@@ -236,21 +326,19 @@ const updateVisitorCounter = async () => {
   if (!visitorCount) return;
 
   const fallbackKey = 'rachel-portfolio-local-visits';
-  const hasVisitedKey = 'rachel-portfolio-visited';
-  const localVisits = Number(localStorage.getItem(fallbackKey) || '0') + (localStorage.getItem(hasVisitedKey) ? 0 : 1);
-  localStorage.setItem(hasVisitedKey, 'true');
+  const counterUrl = 'https://api.counterapi.dev/v1/xrachelburns-portfolio/page-views/up';
+  const localVisits = Number(localStorage.getItem(fallbackKey) || '0') + 1;
   localStorage.setItem(fallbackKey, String(Math.max(localVisits, 1)));
-  visitorCount.textContent = String(Math.max(localVisits, 1)).padStart(4, '0');
 
   try {
-    const response = await fetch('/api/visitor-count', { method: 'POST' });
-    if (!response.ok) return;
+    const response = await fetch(counterUrl, { cache: 'no-store' });
+    if (!response.ok) throw new Error('Counter request failed');
     const data = await response.json();
-    if (Number.isFinite(data.count)) {
-      visitorCount.textContent = String(data.count).padStart(4, '0');
-    }
+    const sharedCount = Number(data.count);
+    if (!Number.isFinite(sharedCount)) throw new Error('Counter response missing count');
+    visitorCount.textContent = String(sharedCount).padStart(4, '0');
   } catch {
-    // The static version shows a local counter until a hosted visitor endpoint is connected.
+    visitorCount.textContent = String(Math.max(localVisits, 1)).padStart(4, '0');
   }
 };
 
@@ -282,7 +370,7 @@ const translations = {
     learningNext: 'Learning next', learningCopy: 'Intelligent systems · Responsible AI · Production machine learning',
     chatIndex: 'Live contact', chatOverline: 'SERIOUS INQUIRIES ONLY', chatTitle: 'Shoot me a message', chatEmphasis: 'if you want to chat.',
     chatCopy: 'Drop a quick note about the opportunity, project, or collaboration. It is styled like a live 3D chat and ready to connect to private SMS delivery.',
-    visitorLabel: 'Visits since launch', visitorSince: 'Tracking from July 10, 2026',
+    visitorLabel: 'Page views since launch', visitorSince: 'Tracking from July 10, 2026',
     chatStatus: 'Live message portal', chatName: 'Your name', chatReply: 'Reply email', chatMessage: 'Message', chatSend: 'Send message',
     chatNote: 'Opens your email app for now; SMS delivery can be connected privately after launch.',
     contactOverline: 'ONE MORE THING...', contactTitle: 'Let’s build something', contactEmphasis: 'worth remembering.',
@@ -313,7 +401,7 @@ const translations = {
     learningNext: 'Lo próximo', learningCopy: 'Sistemas inteligentes · IA responsable · Machine learning en producción',
     chatIndex: 'Contacto en vivo', chatOverline: 'SOLO CONSULTAS SERIAS', chatTitle: 'Mándame un mensaje', chatEmphasis: 'si quieres hablar.',
     chatCopy: 'Deja una nota breve sobre la oportunidad, proyecto o colaboración. Se ve como un chat 3D en vivo y queda listo para conectar envío privado por SMS.',
-    visitorLabel: 'Visitas desde el lanzamiento', visitorSince: 'Contando desde el 10 de julio de 2026',
+    visitorLabel: 'Vistas desde el lanzamiento', visitorSince: 'Contando desde el 10 de julio de 2026',
     chatStatus: 'Portal de mensaje en vivo', chatName: 'Tu nombre', chatReply: 'Email de respuesta', chatMessage: 'Mensaje', chatSend: 'Enviar mensaje',
     chatNote: 'Por ahora abre tu app de email; el envío por SMS se puede conectar en privado después del lanzamiento.',
     contactOverline: 'UNA COSA MÁS...', contactTitle: 'Construyamos algo', contactEmphasis: 'para recordar.',
