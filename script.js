@@ -286,7 +286,6 @@ wordStage?.addEventListener('pointerleave', () => {
 const chatStage = document.querySelector('.chat-3d-stage');
 const chatForm = document.querySelector('[data-chat-form]');
 const chatNote = document.querySelector('[data-chat-note]');
-const visitorCount = document.querySelector('[data-visitor-count]');
 
 chatStage?.addEventListener('pointermove', (event) => {
   const rect = chatStage.getBoundingClientRect();
@@ -321,28 +320,6 @@ chatForm?.addEventListener('submit', (event) => {
     window.location.href = `mailto:dossier@xrachelburns.com?subject=${subject}&body=${body}`;
   }, 900);
 });
-
-const updateVisitorCounter = async () => {
-  if (!visitorCount) return;
-
-  const fallbackKey = 'rachel-portfolio-local-visits';
-  const counterUrl = 'https://api.counterapi.dev/v1/xrachelburns-portfolio/page-views/up';
-  const localVisits = Number(localStorage.getItem(fallbackKey) || '0') + 1;
-  localStorage.setItem(fallbackKey, String(Math.max(localVisits, 1)));
-
-  try {
-    const response = await fetch(counterUrl, { cache: 'no-store' });
-    if (!response.ok) throw new Error('Counter request failed');
-    const data = await response.json();
-    const sharedCount = Number(data.count);
-    if (!Number.isFinite(sharedCount)) throw new Error('Counter response missing count');
-    visitorCount.textContent = String(sharedCount).padStart(4, '0');
-  } catch {
-    visitorCount.textContent = String(Math.max(localVisits, 1)).padStart(4, '0');
-  }
-};
-
-updateVisitorCounter();
 
 const translations = {
   en: {
