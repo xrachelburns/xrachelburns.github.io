@@ -264,16 +264,12 @@ const translations = {
     aboutCopyOne: "I'm pursuing an accelerated B.S. Software Engineering / M.S. AI Engineering pathway at Western Governors University. I care about software that is useful, accessible, and quietly delightful.",
     aboutCopyTwo: 'My customer-service background taught me to listen carefully, communicate clearly, and stay composed under pressure. Those are engineering skills too—and I bring them to every project.',
     basedIn: 'Based in', basedPlace: 'Wisconsin, USA', studying: 'Studying', studyName: 'Software Engineering', exploring: 'Exploring', exploreAreas: 'AI · Cloud · Security',
-    worldIndex: 'Interactive world', worldOverline: 'SEQUOIA MODE', worldTitle: 'A tiny 3D world for everything I’m building.',
-    worldCopy: 'Click a station to jump through the portfolio like a miniature landscape: work, learning, music, skills, and contact all become part of the map.',
-    paletteSequoia: 'Sequoia', paletteLive: 'Live Mac',
     wordIndex: 'Word of the day', wordOverline: 'DAILY LANGUAGE DROP', wordTitle: 'Two words,', wordEmphasis: 'one fresh reset.',
     wordCopy: 'The English pick leans advanced; the Spanish pick stays practical while you build confidence.',
     englishWordLabel: 'Advanced English', spanishWordLabel: 'Spanish practice',
     namiIndex: 'Anime cameos', namiOverline: 'LIVE MODELS', namiTitle: 'Nami dropped by', namiEmphasis: 'the portfolio.',
     namiQuote: 'Hi, it’s Nami... Rachel’s alter ego... err, I mean nickname. Haha. Maybe just one of the many anime favorites she’s watched.',
     killuaFact: 'Fun fact: Killua is also what Rachel named her baby boy... err, her cat, who is absolutely her baby boy and turned one in May.',
-    worldAbout: 'About', worldWork: 'Work', worldMusic: 'Music', worldSkills: 'Skills', worldContact: 'Contact',
     workIndex: 'Selected work', workOverline: 'BUILT WITH INTENTION', workTitle: 'A few things I’ve made.',
     luffyIndex: 'Floating cameo', luffyOverline: 'GEAR 5 ENERGY', luffyTitle: 'Luffy floats in', luffyEmphasis: 'for the side quest.',
     luffyCopy: 'A tiny animated One Piece cameo for the page, because sometimes the portfolio needs a little extra chaos and motion.',
@@ -299,16 +295,12 @@ const translations = {
     aboutCopyOne: 'Estoy cursando una ruta acelerada de B.S. en Ingeniería de Software / M.S. en Ingeniería de IA en Western Governors University. Me importa crear software útil, accesible y discretamente encantador.',
     aboutCopyTwo: 'Mi experiencia en servicio al cliente me enseñó a escuchar con cuidado, comunicar con claridad y mantener la calma bajo presión. Esas también son habilidades de ingeniería, y las llevo a cada proyecto.',
     basedIn: 'Ubicación', basedPlace: 'Wisconsin, EE. UU.', studying: 'Estudiando', studyName: 'Ingeniería de Software', exploring: 'Explorando', exploreAreas: 'IA · Nube · Seguridad',
-    worldIndex: 'Mundo interactivo', worldOverline: 'MODO SEQUOIA', worldTitle: 'Un pequeño mundo 3D para todo lo que estoy construyendo.',
-    worldCopy: 'Haz clic en una estación para recorrer el portfolio como un paisaje en miniatura: proyectos, aprendizaje, música, habilidades y contacto viven en el mapa.',
-    paletteSequoia: 'Sequoia', paletteLive: 'Mac vivo',
     wordIndex: 'Palabras del día', wordOverline: 'DOSIS DIARIA DE LENGUAJE', wordTitle: 'Dos palabras,', wordEmphasis: 'un reinicio fresco.',
     wordCopy: 'La palabra en inglés es más avanzada; la palabra en español se mantiene práctica para ganar confianza.',
     englishWordLabel: 'Inglés avanzado', spanishWordLabel: 'Práctica de español',
     namiIndex: 'Cameos de anime', namiOverline: 'MODELOS EN VIVO', namiTitle: 'Nami pasó por', namiEmphasis: 'el portfolio.',
     namiQuote: 'Hola, soy Nami... el alter ego de Rachel... digo, su apodo. Jaja. Tal vez solo una de sus muchas favoritas de anime.',
     killuaFact: 'Dato curioso: Killua también es el nombre que Rachel le puso a su bebé... digo, a su gato, que definitivamente es su bebé y cumplió un año en mayo.',
-    worldAbout: 'Sobre mí', worldWork: 'Proyectos', worldMusic: 'Música', worldSkills: 'Skills', worldContact: 'Contacto',
     workIndex: 'Proyectos destacados', workOverline: 'HECHO CON INTENCIÓN', workTitle: 'Algunas cosas que he creado.',
     luffyIndex: 'Cameo flotante', luffyOverline: 'ENERGIA GEAR 5', luffyTitle: 'Luffy flota en', luffyEmphasis: 'la side quest.',
     luffyCopy: 'Un pequeno cameo animado de One Piece para la pagina, porque a veces el portfolio necesita un poco mas de caos y movimiento.',
@@ -343,39 +335,5 @@ languageButton?.addEventListener('click', () => {
   const nextLanguage = document.documentElement.lang === 'es' ? 'en' : 'es';
   applyLanguage(nextLanguage);
 });
-
-document.querySelectorAll('.world-station').forEach((station) => {
-  station.addEventListener('click', () => {
-    document.querySelector('.mini-world-stage')?.classList.add('is-active');
-    window.setTimeout(() => document.querySelector('.mini-world-stage')?.classList.remove('is-active'), 2200);
-  });
-});
-
-const worldPaletteButtons = document.querySelectorAll('[data-world-palette]');
-const worldLiveVideo = document.querySelector('.world-live-video');
-
-const applyWorldPalette = (palette) => {
-  const isLive = palette === 'live';
-  document.body.classList.toggle('world-live-mode', isLive);
-  worldPaletteButtons.forEach((button) => {
-    button.classList.toggle('active', button.dataset.worldPalette === palette);
-  });
-
-  if (isLive) {
-    worldLiveVideo?.play().catch(() => {});
-  } else {
-    worldLiveVideo?.pause();
-  }
-
-  localStorage.setItem('rachel-world-palette', palette);
-};
-
-worldPaletteButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    applyWorldPalette(button.dataset.worldPalette || 'sequoia');
-  });
-});
-
-applyWorldPalette(localStorage.getItem('rachel-world-palette') || 'sequoia');
 
 document.querySelector('#year').textContent = new Date().getFullYear();
