@@ -286,6 +286,7 @@ wordStage?.addEventListener('pointerleave', () => {
 const chatStage = document.querySelector('.chat-3d-stage');
 const chatForm = document.querySelector('[data-chat-form]');
 const chatNote = document.querySelector('[data-chat-note]');
+const visitorCount = document.querySelector('[data-visitor-count]');
 
 chatStage?.addEventListener('pointermove', (event) => {
   const rect = chatStage.getBoundingClientRect();
@@ -321,6 +322,23 @@ chatForm?.addEventListener('submit', (event) => {
   }, 900);
 });
 
+const updateVisitorCounter = async () => {
+  if (!visitorCount) return;
+
+  try {
+    const response = await fetch('https://api.counterapi.dev/v1/xrachelburns-portfolio/page-views/up', { cache: 'no-store' });
+    if (!response.ok) throw new Error('Counter request failed');
+    const data = await response.json();
+    const count = Number(data.count);
+    if (!Number.isFinite(count)) throw new Error('Counter response missing count');
+    visitorCount.textContent = String(count).padStart(4, '0');
+  } catch {
+    visitorCount.textContent = '----';
+  }
+};
+
+updateVisitorCounter();
+
 const translations = {
   en: {
     navAbout: 'About', navWork: 'Work', navSkills: 'Skills', navContact: 'Contact',
@@ -347,7 +365,7 @@ const translations = {
     learningNext: 'Learning next', learningCopy: 'Intelligent systems · Responsible AI · Production machine learning',
     chatIndex: 'Live contact', chatOverline: 'SERIOUS INQUIRIES ONLY', chatTitle: 'Shoot me a message', chatEmphasis: 'if you want to chat.',
     chatCopy: 'Drop a quick note about the opportunity, project, or collaboration. It is styled like a live 3D chat and ready to connect to private SMS delivery.',
-    visitorLabel: 'Page views since launch', visitorSince: 'Tracking from July 10, 2026',
+    visitorLabel: 'Live page views', visitorSince: 'Counts each loaded visit to xrachelburns.com',
     chatStatus: 'Live message portal', chatName: 'Your name', chatReply: 'Reply email', chatMessage: 'Message', chatSend: 'Send message',
     chatNote: 'Opens your email app for now; SMS delivery can be connected privately after launch.',
     contactOverline: 'ONE MORE THING...', contactTitle: 'Let’s build something', contactEmphasis: 'worth remembering.',
@@ -378,7 +396,7 @@ const translations = {
     learningNext: 'Lo próximo', learningCopy: 'Sistemas inteligentes · IA responsable · Machine learning en producción',
     chatIndex: 'Contacto en vivo', chatOverline: 'SOLO CONSULTAS SERIAS', chatTitle: 'Mándame un mensaje', chatEmphasis: 'si quieres hablar.',
     chatCopy: 'Deja una nota breve sobre la oportunidad, proyecto o colaboración. Se ve como un chat 3D en vivo y queda listo para conectar envío privado por SMS.',
-    visitorLabel: 'Vistas desde el lanzamiento', visitorSince: 'Contando desde el 10 de julio de 2026',
+    visitorLabel: 'Vistas en vivo', visitorSince: 'Cuenta cada visita cargada a xrachelburns.com',
     chatStatus: 'Portal de mensaje en vivo', chatName: 'Tu nombre', chatReply: 'Email de respuesta', chatMessage: 'Mensaje', chatSend: 'Enviar mensaje',
     chatNote: 'Por ahora abre tu app de email; el envío por SMS se puede conectar en privado después del lanzamiento.',
     contactOverline: 'UNA COSA MÁS...', contactTitle: 'Construyamos algo', contactEmphasis: 'para recordar.',
