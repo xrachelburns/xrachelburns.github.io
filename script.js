@@ -228,9 +228,25 @@ const wordsOfTheDay = [
   }
 ];
 
-const getLocalDayIndex = () => {
-  const now = new Date();
-  return Math.floor(new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime() / 86400000);
+const chicagoDateFormatter = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'America/Chicago',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit'
+});
+
+const getChicagoDateParts = () => {
+  const parts = chicagoDateFormatter.formatToParts(new Date());
+  return {
+    year: Number(parts.find((part) => part.type === 'year')?.value),
+    month: Number(parts.find((part) => part.type === 'month')?.value),
+    day: Number(parts.find((part) => part.type === 'day')?.value)
+  };
+};
+
+const getChicagoDayIndex = () => {
+  const { year, month, day } = getChicagoDateParts();
+  return Math.floor(Date.UTC(year, month - 1, day) / 86400000);
 };
 
 const setWordText = (selector, text) => {
@@ -239,7 +255,7 @@ const setWordText = (selector, text) => {
 };
 
 const applyDailyWords = () => {
-  const entry = wordsOfTheDay[getLocalDayIndex() % wordsOfTheDay.length];
+  const entry = wordsOfTheDay[getChicagoDayIndex() % wordsOfTheDay.length];
   setWordText('english-term', entry.english.term);
   setWordText('english-pronunciation', entry.english.pronunciation);
   setWordText('english-definition', entry.english.definition);
@@ -253,13 +269,13 @@ const applyDailyWords = () => {
 applyDailyWords();
 
 const scheduleDailyWordRefresh = () => {
-  const now = new Date();
-  const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-  const delay = Math.max(1000, nextMidnight.getTime() - now.getTime() + 1000);
-  window.setTimeout(() => {
+  let activeChicagoDay = getChicagoDayIndex();
+  window.setInterval(() => {
+    const nextChicagoDay = getChicagoDayIndex();
+    if (nextChicagoDay === activeChicagoDay) return;
+    activeChicagoDay = nextChicagoDay;
     applyDailyWords();
-    scheduleDailyWordRefresh();
-  }, delay);
+  }, 30000);
 };
 
 scheduleDailyWordRefresh();
