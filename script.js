@@ -339,6 +339,8 @@ chatForm?.addEventListener('submit', (event) => {
 });
 
 const pageViewEndpoint = 'https://api.counterapi.dev/v2/rachel-burnss-team-5765/first-counter-5765';
+// User-confirmed estimate for visits before the replacement counter began.
+const historicalPageViewEstimate = 205;
 let pageViewTotal = null;
 let pageViewState = 'loading';
 
@@ -351,8 +353,8 @@ const renderPageViews = () => {
     : new Intl.NumberFormat(spanish ? 'es' : 'en').format(pageViewTotal);
   visitorCount.style.fontSize = pageViewTotal === null ? 'clamp(1.3rem,3vw,2rem)' : '';
   if (note) note.textContent = pageViewState === 'error'
-    ? (spanish ? 'No se pudo actualizar el contador. Puede estar bloqueado o fuera de servicio.' : 'Counter could not refresh. It may be blocked or temporarily offline.')
-    : (spanish ? 'Visitas registradas desde el 1 de octubre de 2026. Las actualizaciones pueden tardar.' : 'Recorded page views since October 1, 2026. Updates may be delayed.');
+    ? (spanish ? 'No se pudo actualizar el contador. El total mostrado incluye 205 visitas anteriores estimadas.' : 'Counter could not refresh. Any displayed total includes 205 estimated earlier views.')
+    : (spanish ? 'Incluye 205 visitas anteriores estimadas + visitas registradas desde el 1 de octubre de 2026.' : 'Includes 205 estimated earlier views + visits recorded since October 1, 2026.');
 };
 
 const updateVisitorCounter = async (increment = false) => {
@@ -369,7 +371,7 @@ const updateVisitorCounter = async (increment = false) => {
       || data.up_count < 0 || data.down_count < 0 || data.up_count < data.down_count) {
       throw new Error('Counter response missing valid totals');
     }
-    pageViewTotal = data.up_count - data.down_count;
+    pageViewTotal = historicalPageViewEstimate + data.up_count - data.down_count;
     pageViewState = 'ready';
   } catch {
     // Preserve a real total already received, rather than replacing it with zero.
@@ -418,7 +420,7 @@ const translations = {
     learningNext: 'Learning next', learningCopy: 'Intelligent systems · Responsible AI · Production machine learning',
     chatIndex: 'Live contact', chatOverline: 'SERIOUS INQUIRIES ONLY', chatTitle: 'Shoot me a message', chatEmphasis: 'if you want to chat.',
     chatCopy: 'Drop a quick note about the opportunity, project, or collaboration. It is styled like a live 3D chat and ready to connect to private SMS delivery.',
-    visitorLabel: 'Live page views', visitorSince: 'Recorded page views since October 1, 2026. Updates may be delayed.', viewPythonCertificate: 'View certificate ↗',
+    visitorLabel: 'Live page views', visitorSince: 'Includes 205 estimated earlier views + visits recorded since October 1, 2026.', viewPythonCertificate: 'View certificate ↗',
     chatStatus: 'Live message portal', chatName: 'Your name', chatReply: 'Reply email', chatMessage: 'Message', chatSend: 'Send message',
     chatNote: 'Opens your email app for now; SMS delivery can be connected privately after launch.',
     contactOverline: 'ONE MORE THING...', contactTitle: 'Let’s build something', contactEmphasis: 'worth remembering.',
@@ -452,7 +454,7 @@ const translations = {
     learningNext: 'Lo próximo', learningCopy: 'Sistemas inteligentes · IA responsable · Machine learning en producción',
     chatIndex: 'Contacto en vivo', chatOverline: 'SOLO CONSULTAS SERIAS', chatTitle: 'Mándame un mensaje', chatEmphasis: 'si quieres hablar.',
     chatCopy: 'Deja una nota breve sobre la oportunidad, proyecto o colaboración. Se ve como un chat 3D en vivo y queda listo para conectar envío privado por SMS.',
-    visitorLabel: 'Vistas en vivo', visitorSince: 'Visitas registradas desde el 1 de octubre de 2026. Las actualizaciones pueden tardar.', viewPythonCertificate: 'Ver certificado ↗',
+    visitorLabel: 'Vistas en vivo', visitorSince: 'Incluye 205 visitas anteriores estimadas + visitas registradas desde el 1 de octubre de 2026.', viewPythonCertificate: 'Ver certificado ↗',
     chatStatus: 'Portal de mensaje en vivo', chatName: 'Tu nombre', chatReply: 'Email de respuesta', chatMessage: 'Mensaje', chatSend: 'Enviar mensaje',
     chatNote: 'Por ahora abre tu app de email; el envío por SMS se puede conectar en privado después del lanzamiento.',
     contactOverline: 'UNA COSA MÁS...', contactTitle: 'Construyamos algo', contactEmphasis: 'para recordar.',
