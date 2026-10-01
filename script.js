@@ -338,22 +338,56 @@ chatForm?.addEventListener('submit', (event) => {
   }, 900);
 });
 
-const updateVisitorCounter = async () => {
-  if (!visitorCount) return;
+const pageViewEndpoint = 'https://api.counterapi.dev/v2/rachel-burnss-team-5765/first-counter-5765';
+let pageViewTotal = null;
+let pageViewState = 'loading';
 
+const renderPageViews = () => {
+  if (!visitorCount) return;
+  const spanish = document.documentElement.lang === 'es';
+  const note = document.querySelector('[data-i18n="visitorSince"]');
+  visitorCount.textContent = pageViewTotal === null
+    ? (pageViewState === 'loading' ? (spanish ? 'Cargando…' : 'Loading…') : (spanish ? 'No disponible' : 'Unavailable'))
+    : new Intl.NumberFormat(spanish ? 'es' : 'en').format(pageViewTotal);
+  visitorCount.style.fontSize = pageViewTotal === null ? 'clamp(1.3rem,3vw,2rem)' : '';
+  if (note) note.textContent = pageViewState === 'error'
+    ? (spanish ? 'No se pudo actualizar el contador. Puede estar bloqueado o fuera de servicio.' : 'Counter could not refresh. It may be blocked or temporarily offline.')
+    : (spanish ? 'Visitas registradas desde el 1 de octubre de 2026. Las actualizaciones pueden tardar.' : 'Recorded page views since October 1, 2026. Updates may be delayed.');
+};
+
+const updateVisitorCounter = async (increment = false) => {
+  if (!visitorCount) return;
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), 8000);
   try {
-    const response = await fetch('https://api.counterapi.dev/v1/xrachelburns-portfolio/page-views/up', { cache: 'no-store' });
+    const response = await fetch(pageViewEndpoint + (increment ? '/up' : ''), {
+      cache: 'no-store', signal: controller.signal
+    });
     if (!response.ok) throw new Error('Counter request failed');
-    const data = await response.json();
-    const count = Number(data.count);
-    if (!Number.isFinite(count)) throw new Error('Counter response missing count');
-    visitorCount.textContent = String(count).padStart(4, '0');
+    const { data } = await response.json();
+    if (!Number.isSafeInteger(data?.up_count) || !Number.isSafeInteger(data?.down_count)
+      || data.up_count < 0 || data.down_count < 0 || data.up_count < data.down_count) {
+      throw new Error('Counter response missing valid totals');
+    }
+    pageViewTotal = data.up_count - data.down_count;
+    pageViewState = 'ready';
   } catch {
-    visitorCount.textContent = '----';
+    // Preserve a real total already received, rather than replacing it with zero.
+    pageViewState = 'error';
+  } finally {
+    window.clearTimeout(timeout);
+    renderPageViews();
   }
 };
 
-updateVisitorCounter();
+// Record once per page load on the public site. All refreshes only read the total;
+// retrying an increment after a network failure could count the same visit twice.
+const isPortfolioHost = ['xrachelburns.com', 'www.xrachelburns.com', 'xrachelburns.github.io'].includes(window.location.hostname);
+updateVisitorCounter(isPortfolioHost);
+window.setTimeout(() => updateVisitorCounter(), 15000);
+window.setInterval(() => {
+  if (document.visibilityState === 'visible') updateVisitorCounter();
+}, 60000);
 
 const translations = {
   en: {
@@ -384,7 +418,7 @@ const translations = {
     learningNext: 'Learning next', learningCopy: 'Intelligent systems · Responsible AI · Production machine learning',
     chatIndex: 'Live contact', chatOverline: 'SERIOUS INQUIRIES ONLY', chatTitle: 'Shoot me a message', chatEmphasis: 'if you want to chat.',
     chatCopy: 'Drop a quick note about the opportunity, project, or collaboration. It is styled like a live 3D chat and ready to connect to private SMS delivery.',
-    visitorLabel: 'Live page views', visitorSince: 'Counts each loaded visit to xrachelburns.com',
+    visitorLabel: 'Live page views', visitorSince: 'Recorded page views since October 1, 2026. Updates may be delayed.', viewPythonCertificate: 'View certificate ↗',
     chatStatus: 'Live message portal', chatName: 'Your name', chatReply: 'Reply email', chatMessage: 'Message', chatSend: 'Send message',
     chatNote: 'Opens your email app for now; SMS delivery can be connected privately after launch.',
     contactOverline: 'ONE MORE THING...', contactTitle: 'Let’s build something', contactEmphasis: 'worth remembering.',
@@ -418,7 +452,7 @@ const translations = {
     learningNext: 'Lo próximo', learningCopy: 'Sistemas inteligentes · IA responsable · Machine learning en producción',
     chatIndex: 'Contacto en vivo', chatOverline: 'SOLO CONSULTAS SERIAS', chatTitle: 'Mándame un mensaje', chatEmphasis: 'si quieres hablar.',
     chatCopy: 'Deja una nota breve sobre la oportunidad, proyecto o colaboración. Se ve como un chat 3D en vivo y queda listo para conectar envío privado por SMS.',
-    visitorLabel: 'Vistas en vivo', visitorSince: 'Cuenta cada visita cargada a xrachelburns.com',
+    visitorLabel: 'Vistas en vivo', visitorSince: 'Visitas registradas desde el 1 de octubre de 2026. Las actualizaciones pueden tardar.', viewPythonCertificate: 'Ver certificado ↗',
     chatStatus: 'Portal de mensaje en vivo', chatName: 'Tu nombre', chatReply: 'Email de respuesta', chatMessage: 'Mensaje', chatSend: 'Enviar mensaje',
     chatNote: 'Por ahora abre tu app de email; el envío por SMS se puede conectar en privado después del lanzamiento.',
     contactOverline: 'UNA COSA MÁS...', contactTitle: 'Construyamos algo', contactEmphasis: 'para recordar.',
@@ -433,6 +467,7 @@ const applyLanguage = (language) => {
     const key = element.dataset.i18n;
     if (dictionary[key]) element.textContent = dictionary[key];
   });
+  renderPageViews();
   languageButton?.setAttribute('aria-pressed', String(language === 'es'));
   localStorage.setItem('rachel-language', language);
 };
