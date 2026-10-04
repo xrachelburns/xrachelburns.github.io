@@ -341,20 +341,38 @@ chatForm?.addEventListener('submit', (event) => {
 const pageViewEndpoint = 'https://api.counterapi.dev/v2/rachel-burnss-team-5765/first-counter-5765';
 // User-confirmed estimate for visits before the replacement counter began.
 const historicalPageViewEstimate = 205;
-let pageViewTotal = null;
+const pageViewStorageKey = 'rachel-page-view-total';
+const storedPageViewTotal = Number.parseInt(localStorage.getItem(pageViewStorageKey) || '', 10);
+let pageViewTotal = Number.isSafeInteger(storedPageViewTotal) && storedPageViewTotal >= historicalPageViewEstimate
+  ? storedPageViewTotal
+  : historicalPageViewEstimate;
 let pageViewState = 'loading';
 
 const renderPageViews = () => {
   if (!visitorCount) return;
   const spanish = document.documentElement.lang === 'es';
   const note = document.querySelector('[data-i18n="visitorSince"]');
-  visitorCount.textContent = pageViewTotal === null
-    ? (pageViewState === 'loading' ? (spanish ? 'Cargando…' : 'Loading…') : (spanish ? 'No disponible' : 'Unavailable'))
-    : new Intl.NumberFormat(spanish ? 'es' : 'en').format(pageViewTotal);
-  visitorCount.style.fontSize = pageViewTotal === null ? 'clamp(1.3rem,3vw,2rem)' : '';
+  visitorCount.textContent = new Intl.NumberFormat(spanish ? 'es' : 'en').format(pageViewTotal);
+  visitorCount.style.fontSize = '';
   if (note) note.textContent = pageViewState === 'error'
-    ? (spanish ? 'No se pudo actualizar el contador. El total mostrado incluye 205 visitas anteriores estimadas.' : 'Counter could not refresh. Any displayed total includes 205 estimated earlier views.')
+    ? (spanish ? 'Último total confirmado; se actualizará automáticamente cuando vuelva la conexión.' : 'Last confirmed total; it will refresh automatically when the connection returns.')
     : (spanish ? 'Incluye 205 visitas anteriores estimadas + visitas registradas desde el 1 de octubre de 2026.' : 'Includes 205 estimated earlier views + visits recorded since October 1, 2026.');
+};
+
+const fetchPageViewData = async (path, signal) => {
+  const separator = path.includes('?') ? '&' : '?';
+  const response = await fetch(`${path}${separator}refresh=${Date.now()}`, {
+    cache: 'no-store',
+    headers: { Accept: 'application/json' },
+    signal
+  });
+  if (!response.ok) throw new Error('Counter request failed');
+  const { data } = await response.json();
+  if (!Number.isSafeInteger(data?.up_count) || !Number.isSafeInteger(data?.down_count)
+    || data.up_count < 0 || data.down_count < 0 || data.up_count < data.down_count) {
+    throw new Error('Counter response missing valid totals');
+  }
+  return data;
 };
 
 const updateVisitorCounter = async (increment = false) => {
@@ -362,19 +380,19 @@ const updateVisitorCounter = async (increment = false) => {
   const controller = new AbortController();
   const timeout = window.setTimeout(() => controller.abort(), 8000);
   try {
-    const response = await fetch(pageViewEndpoint + (increment ? '/up' : ''), {
-      cache: 'no-store', signal: controller.signal
-    });
-    if (!response.ok) throw new Error('Counter request failed');
-    const { data } = await response.json();
-    if (!Number.isSafeInteger(data?.up_count) || !Number.isSafeInteger(data?.down_count)
-      || data.up_count < 0 || data.down_count < 0 || data.up_count < data.down_count) {
-      throw new Error('Counter response missing valid totals');
+    let data;
+    try {
+      data = await fetchPageViewData(pageViewEndpoint + (increment ? '/up' : ''), controller.signal);
+    } catch (error) {
+      if (!increment) throw error;
+      // If recording the visit is blocked, still try to retrieve the shared total.
+      data = await fetchPageViewData(pageViewEndpoint, controller.signal);
     }
     pageViewTotal = historicalPageViewEstimate + data.up_count - data.down_count;
+    localStorage.setItem(pageViewStorageKey, String(pageViewTotal));
     pageViewState = 'ready';
   } catch {
-    // Preserve a real total already received, rather than replacing it with zero.
+    // Preserve the last confirmed shared total instead of replacing it with an error label.
     pageViewState = 'error';
   } finally {
     window.clearTimeout(timeout);
@@ -385,6 +403,7 @@ const updateVisitorCounter = async (increment = false) => {
 // Record once per page load on the public site. All refreshes only read the total;
 // retrying an increment after a network failure could count the same visit twice.
 const isPortfolioHost = ['xrachelburns.com', 'www.xrachelburns.com', 'xrachelburns.github.io'].includes(window.location.hostname);
+renderPageViews();
 updateVisitorCounter(isPortfolioHost);
 window.setTimeout(() => updateVisitorCounter(), 15000);
 window.setInterval(() => {
