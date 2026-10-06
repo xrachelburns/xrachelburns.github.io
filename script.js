@@ -342,11 +342,14 @@ const pageViewEndpoint = 'https://api.counterapi.dev/v2/rachel-burnss-team-5765/
 // User-confirmed estimate for visits before the replacement counter began.
 const historicalPageViewEstimate = 205;
 const pageViewStorageKey = 'rachel-page-view-total';
+const visitorRefreshIntervalMs = 5000;
 const storedPageViewTotal = Number.parseInt(localStorage.getItem(pageViewStorageKey) || '', 10);
 let pageViewTotal = Number.isSafeInteger(storedPageViewTotal) && storedPageViewTotal >= historicalPageViewEstimate
   ? storedPageViewTotal
   : historicalPageViewEstimate;
 let pageViewState = 'loading';
+let pageViewReadInFlight = false;
+let pageViewWriteInFlight = null;
 
 const renderPageViews = () => {
   if (!visitorCount) return;
@@ -356,12 +359,12 @@ const renderPageViews = () => {
   visitorCount.style.fontSize = '';
   if (note) note.textContent = pageViewState === 'error'
     ? (spanish ? 'Último total confirmado; se actualizará automáticamente cuando vuelva la conexión.' : 'Last confirmed total; it will refresh automatically when the connection returns.')
-    : (spanish ? 'Incluye 205 visitas anteriores estimadas + visitas registradas desde el 1 de octubre de 2026.' : 'Includes 205 estimated earlier views + visits recorded since October 1, 2026.');
+    : (spanish ? 'El total en vivo incluye vistas anteriores; cada apertura o recarga se registra de inmediato y esta pantalla se actualiza cada 5 segundos.' : 'Live total includes earlier views; every page open or reload is recorded immediately, and this display refreshes every 5 seconds.');
 };
 
 const fetchPageViewData = async (path, signal) => {
   const separator = path.includes('?') ? '&' : '?';
-  const response = await fetch(`${path}${separator}refresh=${Date.now()}`, {
+  const response = await fetch(path + separator + 'refresh=' + Date.now(), {
     cache: 'no-store',
     headers: { Accept: 'application/json' },
     signal
@@ -375,6 +378,12 @@ const fetchPageViewData = async (path, signal) => {
   return data;
 };
 
+const applyPageViewData = (data) => {
+  pageViewTotal = historicalPageViewEstimate + data.up_count - data.down_count;
+  localStorage.setItem(pageViewStorageKey, String(pageViewTotal));
+  pageViewState = 'ready';
+};
+
 const updateVisitorCounter = async (increment = false) => {
   if (!visitorCount) return;
   const controller = new AbortController();
@@ -385,12 +394,10 @@ const updateVisitorCounter = async (increment = false) => {
       data = await fetchPageViewData(pageViewEndpoint + (increment ? '/up' : ''), controller.signal);
     } catch (error) {
       if (!increment) throw error;
-      // If recording the visit is blocked, still try to retrieve the shared total.
+      // If recording the visit is blocked, still retrieve the shared total so the UI stays current.
       data = await fetchPageViewData(pageViewEndpoint, controller.signal);
     }
-    pageViewTotal = historicalPageViewEstimate + data.up_count - data.down_count;
-    localStorage.setItem(pageViewStorageKey, String(pageViewTotal));
-    pageViewState = 'ready';
+    applyPageViewData(data);
   } catch {
     // Preserve the last confirmed shared total instead of replacing it with an error label.
     pageViewState = 'error';
@@ -400,15 +407,42 @@ const updateVisitorCounter = async (increment = false) => {
   }
 };
 
-// Record once per page load on the public site. All refreshes only read the total;
-// retrying an increment after a network failure could count the same visit twice.
 const isPortfolioHost = ['xrachelburns.com', 'www.xrachelburns.com', 'xrachelburns.github.io'].includes(window.location.hostname);
+
+const recordPageOpen = () => {
+  if (!isPortfolioHost || !visitorCount) return;
+  const write = updateVisitorCounter(true);
+  pageViewWriteInFlight = write;
+  write.finally(() => {
+    if (pageViewWriteInFlight === write) pageViewWriteInFlight = null;
+  });
+};
+
+const refreshVisiblePageViews = async () => {
+  if (!visitorCount || document.visibilityState !== 'visible' || pageViewReadInFlight) return;
+  if (pageViewWriteInFlight) await pageViewWriteInFlight;
+  if (pageViewReadInFlight) return;
+  pageViewReadInFlight = true;
+  try {
+    await updateVisitorCounter(false);
+  } finally {
+    pageViewReadInFlight = false;
+  }
+};
+
 renderPageViews();
-updateVisitorCounter(isPortfolioHost);
-window.setTimeout(() => updateVisitorCounter(), 15000);
-window.setInterval(() => {
-  if (document.visibilityState === 'visible') updateVisitorCounter();
-}, 60000);
+recordPageOpen();
+window.setTimeout(refreshVisiblePageViews, 2500);
+window.setInterval(refreshVisiblePageViews, visitorRefreshIntervalMs);
+window.addEventListener('focus', refreshVisiblePageViews);
+document.addEventListener('visibilitychange', refreshVisiblePageViews);
+
+// A page restored from the browser back/forward cache is another real page opening.
+window.addEventListener('pageshow', (event) => {
+  if (!event.persisted) return;
+  recordPageOpen();
+  window.setTimeout(refreshVisiblePageViews, 1000);
+});
 
 const translations = {
   en: {
@@ -439,7 +473,7 @@ const translations = {
     learningNext: 'Learning next', learningCopy: 'Intelligent systems · Responsible AI · Production machine learning',
     chatIndex: 'Live contact', chatOverline: 'SERIOUS INQUIRIES ONLY', chatTitle: 'Shoot me a message', chatEmphasis: 'if you want to chat.',
     chatCopy: 'Drop a quick note about the opportunity, project, or collaboration. It is styled like a live 3D chat and ready to connect to private SMS delivery.',
-    visitorLabel: 'Live page views', visitorSince: 'Includes 205 estimated earlier views + visits recorded since October 1, 2026.', viewPythonCertificate: 'View certificate ↗',
+    visitorLabel: 'Live page views', visitorSince: 'Live total includes earlier views; every page open or reload is recorded immediately, and this display refreshes every 5 seconds.', viewPythonCertificate: 'View certificate ↗',
     chatStatus: 'Live message portal', chatName: 'Your name', chatReply: 'Reply email', chatMessage: 'Message', chatSend: 'Send message',
     chatNote: 'Opens your email app for now; SMS delivery can be connected privately after launch.',
     contactOverline: 'ONE MORE THING...', contactTitle: 'Let’s build something', contactEmphasis: 'worth remembering.',
@@ -473,7 +507,7 @@ const translations = {
     learningNext: 'Lo próximo', learningCopy: 'Sistemas inteligentes · IA responsable · Machine learning en producción',
     chatIndex: 'Contacto en vivo', chatOverline: 'SOLO CONSULTAS SERIAS', chatTitle: 'Mándame un mensaje', chatEmphasis: 'si quieres hablar.',
     chatCopy: 'Deja una nota breve sobre la oportunidad, proyecto o colaboración. Se ve como un chat 3D en vivo y queda listo para conectar envío privado por SMS.',
-    visitorLabel: 'Vistas en vivo', visitorSince: 'Incluye 205 visitas anteriores estimadas + visitas registradas desde el 1 de octubre de 2026.', viewPythonCertificate: 'Ver certificado ↗',
+    visitorLabel: 'Vistas en vivo', visitorSince: 'El total en vivo incluye vistas anteriores; cada apertura o recarga se registra de inmediato y esta pantalla se actualiza cada 5 segundos.', viewPythonCertificate: 'Ver certificado ↗',
     chatStatus: 'Portal de mensaje en vivo', chatName: 'Tu nombre', chatReply: 'Email de respuesta', chatMessage: 'Mensaje', chatSend: 'Enviar mensaje',
     chatNote: 'Por ahora abre tu app de email; el envío por SMS se puede conectar en privado después del lanzamiento.',
     contactOverline: 'UNA COSA MÁS...', contactTitle: 'Construyamos algo', contactEmphasis: 'para recordar.',
