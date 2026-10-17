@@ -29,6 +29,11 @@ const initializeTransparentSketchfabModels = () => {
     status.className = 'model-status';
     status.textContent = 'Loading character…';
     wrapper.prepend(status);
+    const loadTimeout = window.setTimeout(() => {
+      if (wrapper.dataset.viewerState !== 'ready') {
+        status.textContent = 'Preview unavailable. Open the model link below.';
+      }
+    }, 30000);
     const client = new window.Sketchfab(iframe);
     client.init(iframe.dataset.sketchfabUid, {
       autostart: 1, preload: 1, transparent: 1, animation_autoplay: 1,
@@ -36,10 +41,10 @@ const initializeTransparentSketchfabModels = () => {
       ui_vr: 0, ui_settings: 0, ui_fullscreen: 0, ui_help: 0, dnt: 1,
       success(api) {
         api.addEventListener('viewerready', () => {
-          api.setBackground({ transparent: true }, () => {
-            wrapper.dataset.viewerState = 'ready';
-            status.remove();
-          });
+          window.clearTimeout(loadTimeout);
+          wrapper.dataset.viewerState = 'ready';
+          status.remove();
+          api.setBackground({ transparent: true });
           api.setEnableCameraConstraints(false, {}, () => api.recenterCamera());
           api.getAnimations((error, animations) => {
             if (!error && animations.length) {
@@ -52,7 +57,7 @@ const initializeTransparentSketchfabModels = () => {
         });
         api.start();
       },
-      error() { status.textContent = 'Character unavailable. Open the model link below.'; }
+      error() { window.clearTimeout(loadTimeout); status.textContent = 'Character unavailable. Open the model link below.'; }
     });
   });
 };
