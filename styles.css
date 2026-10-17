@@ -295,3 +295,6 @@ body,body.light{background:transparent!important}
 .anime-model-stack .character-model .model-credit{display:block!important;opacity:.85!important;width:100%!important;font-size:.65rem!important}
 .model-status{font-size:.8rem;text-align:center;color:var(--text);padding:12px}
 @media(max-width:760px){.anime-model-stack{grid-template-columns:1fr}.hero-copy{padding:18px}.anime-model-stack .character-model{max-width:420px!important}}
+
+/* Keep the fixed wallpaper above the root canvas and behind page content. */
+body{isolation:isolate}
