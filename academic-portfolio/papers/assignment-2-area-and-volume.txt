@@ -1,0 +1,225 @@
+CS109 Assignment 2 Area and Volume Calculations
+
+Student Name: Rachel Burns
+
+Date: October 16, 2026
+
+	For this assignment, I wrote a Java program that calculates the area of a rectangle and the volumes of a sphere, cylinder, and cube. I used a separate class for each shape so the program would stay organized and be easier to follow. To run it in a Java IDE, save the complete source code below as Main.java. The Assignment2.txt file contains the same code in the format required for submission.
+
+Complete Java source
+
+/*
+ * CS109 Assignment 2: Area and Volume Calculations
+ * This program uses separate Rectangle, Sphere, Cylinder, and Cube classes.
+ * Each object stores its dimensions and provides an area or volume method.
+ * A repeating menu lets the user choose a shape, enter positive dimensions,
+ * And view the result. Invalid input is rejected with a helpful message.
+ * all dimensions should use the same unit. Area uses square units, and
+ * volume uses cubic units. Very large or small results are checked before
+ * display because Java's double type has a limited numeric range.
+ *
+ * Formula references: the assignment supplies rectangle area (length * width).
+ * Standard geometry formulas: sphere = (4/3) * pi * radius^3;
+ * cylinder = pi * radius^2 * height; cube = side^3.
+ * Java API reference for Scanner, Double, and Math:
+ * https://docs.oracle.com/javase/8/docs/api/
+ */
+
+import java.util.Locale;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        try (Scanner input = new Scanner(System.in)) {
+            System.out.println("Area and Volume Calculator");
+            System.out.println("Use the same unit for every dimension.");
+
+            while (true) {
+                printMenu();
+                int choice = readChoice(input);
+                if (choice == 0) {
+                    System.out.println("Goodbye!");
+                    break;
+                }
+
+                double result;
+                String label;
+                String units;
+
+                switch (choice) {
+                    case 1:
+                        double length = readPositive(input, "Enter length: ");
+                        double width = readPositive(input, "Enter width: ");
+                        Rectangle rectangle = new Rectangle(length, width);
+                        result = rectangle.calculateArea();
+                        label = "Rectangle area";
+                        units = "square units";
+                        break;
+                    case 2:
+                        double sphereRadius = readPositive(input, "Enter radius: ");
+                        Sphere sphere = new Sphere(sphereRadius);
+                        result = sphere.calculateVolume();
+                        label = "Sphere volume";
+                        units = "cubic units";
+                        break;
+                    case 3:
+                        double cylinderRadius = readPositive(input, "Enter radius: ");
+                        double height = readPositive(input, "Enter height: ");
+                        Cylinder cylinder = new Cylinder(cylinderRadius, height);
+                        result = cylinder.calculateVolume();
+                        label = "Cylinder volume";
+                        units = "cubic units";
+                        break;
+                    case 4:
+                        double side = readPositive(input, "Enter side length: ");
+                        Cube cube = new Cube(side);
+                        result = cube.calculateVolume();
+                        label = "Cube volume";
+                        units = "cubic units";
+                        break;
+                    default:
+                        // readChoice allows only choices from 0 through 4.
+                        throw new IllegalStateException("Unexpected menu choice.");
+                }
+
+                // Detect overflow (infinity) and underflow to zero.
+                if (!Double.isFinite(result) || result <= 0) {
+                    System.out.println("Result is outside the supported numeric range.");
+                    System.out.println("Choose the shape again and use less extreme dimensions.");
+                } else {
+                    // Significant digits also display very small values clearly.
+                    System.out.printf(Locale.US, "%s: %.10g %s%n", label, result, units);
+                }
+            }
+        } catch (NoSuchElementException ex) {
+            // End-of-input can occur when a console closes or input runs out.
+            System.out.println("\nInput ended. Calculator closed.");
+        }
+    }
+
+    private static void printMenu() {
+        System.out.println("\n1. Rectangle area");
+        System.out.println("2. Sphere volume");
+        System.out.println("3. Cylinder volume");
+        System.out.println("4. Cube volume");
+        System.out.println("0. Exit");
+    }
+
+    private static int readChoice(Scanner input) {
+        while (true) {
+            System.out.print("Choose 0 through 4: ");
+            try {
+                int choice = Integer.parseInt(input.nextLine().trim());
+                if (choice >= 0 && choice <= 4) {
+                    return choice;
+                }
+            } catch (NumberFormatException ex) {
+                // Invalid text falls through to the message below.
+            }
+            System.out.println("Please enter a whole number from 0 through 4.");
+        }
+    }
+
+    private static double readPositive(Scanner input, String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            try {
+                double value = Double.parseDouble(input.nextLine().trim());
+                if (Double.isFinite(value) && value > 0) {
+                    return value;
+                }
+            } catch (NumberFormatException ex) {
+                // Reading whole lines avoids leaving invalid tokens behind.
+            }
+            System.out.println("Please enter a finite number greater than zero (example: 2.5).");
+        }
+    }
+}
+
+// Private fields store dimensions; constructors initialize each object.
+class Rectangle {
+    private final double length;
+    private final double width;
+
+    public Rectangle(double length, double width) {
+        this.length = length;
+        this.width = width;
+    }
+
+    public double calculateArea() {
+        return length * width;
+    }
+}
+
+class Sphere {
+    private final double radius;
+
+    public Sphere(double radius) {
+        this.radius = radius;
+    }
+
+    public double calculateVolume() {
+        // 4.0 / 3.0 avoids Java integer division.
+        return (4.0 / 3.0) * Math.PI * radius * radius * radius;
+    }
+}
+
+class Cylinder {
+    private final double radius;
+    private final double height;
+
+    public Cylinder(double radius, double height) {
+        this.radius = radius;
+        this.height = height;
+    }
+
+    public double calculateVolume() {
+        return Math.PI * radius * radius * height;
+    }
+}
+
+class Cube {
+    private final double side;
+
+    public Cube(double side) {
+        this.side = side;
+    }
+
+    public double calculateVolume() {
+        return side * side * side;
+    }
+}
+
+
+Validation and expected results
+
+I compiled and ran the program in VS Code. All four shape calculations produced the expected results. The program also rejected an invalid menu entry and a negative dimension, accepted corrected input, and exited normally when I selected 0.
+
+For the rectangle test, I would choose option 1 and enter 5 for the length and 3 for the width. The result should be 15 square units.
+
+For the sphere test, I would choose option 2 and enter a radius of 3. The volume should be about 113.0973355 cubic units.
+
+For the cylinder test, I would choose option 3, enter a radius of 2, and then enter a height of 5. The volume should be about 62.83185307 cubic units.
+
+For the cube test, I would choose option 4 and enter a side length of 2.5. The result should be 15.625 cubic units.
+
+I would also try letters, blank entries, zero, negative numbers, NaN, and Infinity to make sure the input validation works. Each invalid entry should display a clear message and give the user another chance to enter a value.
+
+I would test the menu with entries such as 9 and 1.5 as well. Both should be rejected. After running several calculations, choosing 0 should close the program normally.
+To test the numeric range check, I would choose the cube option and enter 1e200. The program should display a range error and then return to the menu.
+Rubric alignment
+
+The program covers the main assignment requirements without making the design more complicated than it needs to be. The Main class creates objects from four separate shape classes and calls the correct calculation method for each one. Every menu option asks for the dimensions it needs, while the shared validation methods catch invalid input and values outside the supported numeric range. I kept the formulas direct so the program would be efficient and easy to read. The opening comments explain the program�s purpose, formulas, units, and Java reference, and the shorter comments point out details that may not be obvious, such as input validation and avoiding integer division.
+
+References
+
+[1] Wolfram MathWorld. (n.d.). Sphere. Retrieved October 17, 2026, from https://mathworld.wolfram.com/Sphere.html
+
+[2] Wolfram MathWorld. (n.d.). Cylinder. Retrieved October 17, 2026, from https://mathworld.wolfram.com/Cylinder.html
+
+[3] Wolfram MathWorld. (n.d.). Cube. Retrieved October 17, 2026, from https://mathworld.wolfram.com/Cube.html
+
+[4] Oracle. (n.d.). Scanner. Java Platform Standard Edition 8 API Specification. Retrieved October 17, 2026, from https://docs.oracle.com/javase/8/docs/api/java/util/Scanner.html
+
+[5] Oracle. (n.d.). Double. Java Platform Standard Edition 8 API Specification. Retrieved October 17, 2026, from https://docs.oracle.com/javase/8/docs/api/java/lang/Double.html
