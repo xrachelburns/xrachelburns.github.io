@@ -21,44 +21,44 @@ document.querySelectorAll('.journey, .wallpaper-strip').forEach((section) => sec
 
 const initializeTransparentSketchfabModels = () => {
   if (!window.Sketchfab) return;
-
   document.querySelectorAll('[data-sketchfab-uid]').forEach((iframe) => {
-    const uid = iframe.dataset.sketchfabUid;
-    if (!uid || iframe.dataset.sketchfabApiReady) return;
-
+    if (iframe.dataset.sketchfabApiReady) return;
+    iframe.dataset.sketchfabApiReady = 'initializing';
+    const wrapper = iframe.closest('.character-model');
+    const status = document.createElement('p');
+    status.className = 'model-status';
+    status.textContent = 'Loading character…';
+    wrapper.prepend(status);
     const client = new window.Sketchfab(iframe);
-    client.init(uid, {
-      autostart: 1,
-      preload: 1,
-      transparent: 1,
-      ui_infos: 0,
-      ui_controls: 0,
-      ui_stop: 0,
-      ui_watermark: 0,
-      ui_watermark_link: 0,
-      ui_hint: 0,
-      ui_ar: 0,
-      ui_vr: 0,
-      ui_settings: 0,
-      ui_fullscreen: 0,
-      ui_help: 0,
-      ui_inspector: 0,
-      ui_annotations: 0,
-      dnt: 1,
+    client.init(iframe.dataset.sketchfabUid, {
+      autostart: 1, preload: 1, transparent: 1, animation_autoplay: 1,
+      ui_infos: 0, ui_controls: 0, ui_stop: 0, ui_hint: 0, ui_ar: 0,
+      ui_vr: 0, ui_settings: 0, ui_fullscreen: 0, ui_help: 0, dnt: 1,
       success(api) {
-        iframe.dataset.sketchfabApiReady = 'true';
-        api.start();
         api.addEventListener('viewerready', () => {
-          if (typeof api.setBackground === 'function') {
-            api.setBackground({ transparent: true });
-          }
+          api.setBackground({ transparent: true }, () => {
+            wrapper.dataset.viewerState = 'ready';
+            status.remove();
+          });
+          api.setEnableCameraConstraints(false, {}, () => api.recenterCamera());
+          api.getAnimations((error, animations) => {
+            if (!error && animations.length) {
+              api.setCurrentAnimationByUID(animations[0][0], () => {
+                api.setCycleMode('loopOne');
+                api.play();
+              });
+            }
+          });
         });
-      }
+        api.start();
+      },
+      error() { status.textContent = 'Character unavailable. Open the model link below.'; }
     });
   });
 };
-
-window.addEventListener('load', initializeTransparentSketchfabModels);
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeTransparentSketchfabModels, { once: true });
+} else { initializeTransparentSketchfabModels(); }
 
 if (savedTheme === 'light') {
   body.classList.add('light');
