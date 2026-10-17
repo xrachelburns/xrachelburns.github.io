@@ -1,0 +1,196 @@
+PERFECT NUMBERS PROJECT
+Java source file: Main.java
+=========================================
+
+PROJECT SETUP
+Create a Java project in your IDE, add a class named Main, and paste the
+Java source below into Main.java. Alternatively, save the source section
+as Main.java and run:
+    javac Main.java
+    java Main
+
+HOW THE PROGRAM WORKS
+Part 1 uses two nested for loops directly in main. The outer loop checks
+the integers 1 through 200. The inner loop adds each proper divisor.
+A number is printed only when that sum equals the number. Expected output
+for Part 1: 6 and 28.
+
+Part 2 calls searchWithUserLimit from main. The method prompts for a positive
+integer, validates the input, and searches up to the chosen limit. The
+isPerfect method uses paired divisors and tests only through the square
+root, so it performs fewer divisions than testing every smaller integer.
+The search limit uses long instead of int. Checks before addition prevent
+the divisor sum from overflowing long.
+
+TEST SCENARIOS (EXPECTED RESULTS)
+Input 1: Rejected; enter at least 2.
+Input 200: 6, 28 (2 numbers).
+Input 1000: 6, 28, 496 (3 numbers).
+Input 10000: 6, 28, 496, 8128 (4 numbers).
+Input abc: Rejected as invalid.
+Input 2147483648: Accepted as a long, although the full search is
+very slow and is not practical as a quick interactive test.
+Input 9223372036854775808: Rejected because it exceeds Long.MAX_VALUE.
+
+DATA TYPE AND OVERFLOW DISCUSSION
+An int is a signed 32-bit integer and can store values from -2,147,483,648
+through 2,147,483,647. An input greater than Integer.MAX_VALUE cannot
+be read with Integer.parseInt and will cause NumberFormatException.
+Also, int arithmetic can wrap around if an expression overflows.
+A long is a signed 64-bit integer, with a maximum of
+9,223,372,036,854,775,807. This program parses the input as long and
+reports an error if the user enters a larger number. For numeric values
+beyond long, Java's BigInteger provides arbitrary-precision arithmetic,
+but simply changing the data type would not make an exhaustive search
+through enormous limits computationally feasible (Oracle, n.d.-a,
+n.d.-b). The present program prioritizes understandable loops and
+improves each number's divisor check to O(sqrt(n)) work. A very high
+limit can still require substantial processing time.
+
+REFERENCES (APA 7th edition)
+Oracle. (n.d.-a). Primitive data types. The Java tutorials.
+https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html
+
+Oracle. (n.d.-b). BigInteger (Java SE 26 & JDK 26).
+https://docs.oracle.com/en/java/javase/26/docs/api/java.base/java/math/BigInteger.html
+
+=========================================
+JAVA SOURCE CODE: Main.java
+=========================================
+
+/*
+ * Perfect Numbers Project
+ *
+ * Purpose: Find perfect numbers, whose positive divisors excluding the
+ * number itself add up to the number.
+ *
+ * Part 1: Nested loops in main inspect integers from 1 through 200.
+ * Part 2: A separate method asks the user for an upper search limit,
+ * then finds perfect numbers up to that limit (inclusive).
+ *
+ * The user-selected search uses long instead of int, checks divisor pairs
+ * to save work, and guards against arithmetic overflow when adding divisors.
+ */
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        System.out.println("PART 1: Perfect numbers from 1 through 200");
+
+        // Outer loop: examine every candidate from 1 to 200.
+        for (int number = 1; number <= 200; number++) {
+            int divisorSum = 0;
+
+            // Inner loop: add proper divisors (the number itself is excluded).
+            for (int divisor = 1; divisor <= number / 2; divisor++) {
+                if (number % divisor == 0) {
+                    divisorSum += divisor;
+                }
+            }
+
+            // One is not perfect, since it has no positive proper divisors.
+            if (number > 1 && divisorSum == number) {
+                System.out.println(number);
+            }
+        }
+
+        // Part 2 is implemented as a method called from main.
+        try (Scanner scanner = new Scanner(System.in)) {
+            searchWithUserLimit(scanner);
+        }
+    }
+
+    /**
+     * Reads a whole-number search limit from the user. Parsing as long
+     * allows a wider input range than int; invalid input is handled safely.
+     */
+    public static void searchWithUserLimit(Scanner scanner) {
+        System.out.println("\nPART 2: Choose your own upper limit");
+        System.out.print("Enter a positive whole number (2 to "
+                + Long.MAX_VALUE + "): ");
+
+        String text = scanner.nextLine().trim();
+        long upperLimit;
+
+        try {
+            upperLimit = Long.parseLong(text);
+        } catch (NumberFormatException exception) {
+            System.out.println("Invalid input or outside the long range.");
+            System.out.println("The maximum supported limit is "
+                    + Long.MAX_VALUE + ".");
+            return;
+        }
+
+        if (upperLimit < 2) {
+            System.out.println("Please enter a number of at least 2.");
+            return;
+        }
+
+        if (upperLimit > 1_000_000L) {
+            System.out.println("Note: Searching a very large range may "
+                    + "take considerable time.");
+        }
+
+        System.out.println("Perfect numbers from 1 through " + upperLimit + ":");
+        int count = 0;
+
+        // Outer loop: examine every candidate through the requested limit.
+        for (long candidate = 2; candidate <= upperLimit; candidate++) {
+            if (isPerfect(candidate)) {
+                System.out.println(candidate);
+                count++;
+            }
+
+            // Prevent candidate++ from wrapping around at Long.MAX_VALUE.
+            if (candidate == upperLimit) {
+                break;
+            }
+        }
+
+        System.out.println("Total perfect numbers found: " + count);
+    }
+
+    /**
+     * Tests whether a long value is perfect.
+     * Divisors come in pairs, so only divisors up to the square root
+     * are needed. The division-based loop condition avoids d * d overflow.
+     */
+    public static boolean isPerfect(long number) {
+        if (number < 2) {
+            return false;
+        }
+
+        // One is a proper divisor of every integer greater than one.
+        long sum = 1;
+
+        // Inner loop: inspect smaller members of each possible divisor pair.
+        for (long divisor = 2; divisor <= number / divisor; divisor++) {
+            if (number % divisor == 0) {
+                long partner = number / divisor;
+
+                // A sum exceeding number cannot later become equal to it.
+                // Subtraction before addition prevents long overflow.
+                if (sum > number - divisor) {
+                    return false;
+                }
+                sum += divisor;
+
+                // Do not double-count a square root (e.g., 6 for 36).
+                if (partner != divisor) {
+                    if (sum > number - partner) {
+                        return false;
+                    }
+                    sum += partner;
+                }
+
+                if (sum > number) {
+                    return false;
+                }
+            }
+        }
+
+        return sum == number;
+    }
+}
